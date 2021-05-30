@@ -116,7 +116,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["dataviz-makeover-1_files/anchor-4.2.2/anchor.min.js","dataviz-makeover-1_files/bowser-1.9.3/bowser.min.js","dataviz-makeover-1_files/distill-2.2.21/template.v2.js","dataviz-makeover-1_files/jquery-1.11.3/jquery.min.js","dataviz-makeover-1_files/popper-2.6.0/popper.min.js","dataviz-makeover-1_files/tippy-6.2.7/tippy-bundle.umd.min.js","dataviz-makeover-1_files/tippy-6.2.7/tippy-light-border.css","dataviz-makeover-1_files/tippy-6.2.7/tippy.css","dataviz-makeover-1_files/tippy-6.2.7/tippy.umd.min.js","dataviz-makeover-1_files/webcomponents-2.0.0/webcomponents.js","Images/1.png","Images/2.png","Images/New Microsoft Word Document.docx"]}
+  {"type":"character","attributes":{},"value":["dataviz-makeover-1_files/anchor-4.2.2/anchor.min.js","dataviz-makeover-1_files/bowser-1.9.3/bowser.min.js","dataviz-makeover-1_files/distill-2.2.21/template.v2.js","dataviz-makeover-1_files/jquery-1.11.3/jquery.min.js","dataviz-makeover-1_files/popper-2.6.0/popper.min.js","dataviz-makeover-1_files/tippy-6.2.7/tippy-bundle.umd.min.js","dataviz-makeover-1_files/tippy-6.2.7/tippy-light-border.css","dataviz-makeover-1_files/tippy-6.2.7/tippy.css","dataviz-makeover-1_files/tippy-6.2.7/tippy.umd.min.js","dataviz-makeover-1_files/webcomponents-2.0.0/webcomponents.js","Images/1.png","Images/2.jpg","Images/3.png","Images/4.png","Images/5.png","Images/6.png"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1507,6 +1507,29 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <h3 id="not-suitable-for-the-current-graph-color-matching">4) Not suitable for the current graph color matching</h3>
 <p>There is no big problem with the color matching between blue and orange. However, as he tried to use shadow to show trade surplus deficit, orange will cover blue, causing confusion between the color of shadow and orange, which is not easy to read.</p>
 <p><strong>Suggestion</strong>: Modify color combinations to better match and fit.</p>
+<h1 id="proposed-data-visualisation">2.Proposed Data Visualisation</h1>
+<h2 id="a-sketch-of-proposed-design">2.1 A sketch of proposed design</h2>
+<p>image: <img src="Images/2.jpg" /></p>
+<h2 id="advantages-of-proposed-design">2.2 Advantages of proposed design</h2>
+<h3 id="improved-the-correctness-of-graph-title">1) Improved the correctness of graph title:</h3>
+<p>Add more detailed sub titles and the readers can more clearly understand the main purpose and the content of the chart.</p>
+<h3 id="select-a-combination-of-line-chart-and-bar-chart-to-visualize-data">2) Select a combination of line chart and bar chart to visualize data:</h3>
+<p>The expansion of one chart into three i. clearly shows the trend and size of each region’s trade in 2019 and 2020; ii. more intuitively shows the positive and negative values of the trade to identify the trade is deficit or not.</p>
+<h3 id="well-defined-axis-label-and-appropriate-thick-marks">3) Well defined axis label and appropriate thick marks:</h3>
+<p>The previous chart lacked units on the vertical axis, so the numerical significance of the vertical axis was not clear. The addition of units and unified thick marks made it more convenient to compare the difference value of each region.</p>
+<h3 id="improved-color-matching">4) Improved color matching:</h3>
+<p>Adopted a more harmonious color match than before to increase the aesthetic.</p>
+<h1 id="data-visualisation">3. Data Visualisation</h1>
+<p>The data file consists of three worksheets: Content, T1 and T2. First need to rename T1 to Import and T2 to Export, then delete useless worksheet Content. image: <img src="Images/3.png" /> These two datasets include data for 119 countries and regions from January 1976 to April 2021.</p>
+<p>The final visualisation consists of three parts, which are<br />
+Table 1 – Changes of export value in Singapore.<br />
+Table 2 – Changes of import value in Singapore.<br />
+Table 3 – Changes of balance of trade.</p>
+<h2 id="data-preparation">3.1 Data Preparation</h2>
+<p><strong>For import dataset (Table 1)</strong> ### 1) Remove redundant columns and rows. Delete extra columns and only keep data from January 2019 to December 2020. image: <img src="Images/4.png" /></p>
+<p>Use Filter to delete data of other markets, leaving only six rows of data – Hong Kong, Mainland China, Japan, Taiwan, Malaysia and U.S. image: <img src="Images/5.png" /></p>
+<h3 id="rename-header-and-country-names">2) Rename header and country names</h3>
+<p>Rename header from “Variables” to “Country” and delete “Thousands Dollars” in each row. image: <img src="Images/6.png" /></p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->

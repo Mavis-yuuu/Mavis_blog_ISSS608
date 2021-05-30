@@ -66,6 +66,48 @@ There is no big problem with the color matching between blue and orange. However
 
 **Suggestion**: Modify color combinations to better match and fit.
 
+# 2.Proposed Data Visualisation
+## 2.1 A sketch of proposed design
+image: ![](Images/2.jpg) 
+
+## 2.2 Advantages of proposed design
+### 1) Improved the correctness of graph title:
+Add more detailed sub titles and the readers can more clearly understand the main purpose and the content of the chart.
+
+### 2) Select a combination of line chart and bar chart to visualize data:
+The expansion of one chart into three i. clearly shows the trend and size of each region’s trade in 2019 and 2020; ii. more intuitively shows the positive and negative values of the trade to identify the trade is deficit or not.
+
+### 3) Well defined axis label and appropriate thick marks:
+The previous chart lacked units on the vertical axis, so the numerical significance of the vertical axis was not clear. The addition of units and unified thick marks made it more convenient to compare the difference value of each region.
+
+### 4) Improved color matching:
+Adopted a more harmonious color match than before to increase the aesthetic.
+
+# 3. Data Visualisation
+The data file consists of three worksheets: Content, T1 and T2. First need to rename T1 to Import and T2 to Export, then delete useless worksheet Content.
+image: ![](Images/3.png) 
+These two datasets include data for 119 countries and regions from January 1976 to April 2021.
+
+The final visualisation consists of three parts, which are  
+Table 1 -- Changes of export value in Singapore.  
+Table 2 -- Changes of import value in Singapore.  
+Table 3 -- Changes of balance of trade.  
+
+## 3.1 Data Preparation
+**For import dataset (Table 1)**
+### 1) Remove redundant columns and rows.
+Delete extra columns and only keep data from January 2019 to December 2020.
+image: ![](Images/4.png) 
+
+Use Filter to delete data of other markets, leaving only six rows of data – Hong Kong, Mainland China, Japan, Taiwan, Malaysia and U.S.
+image: ![](Images/5.png) 
+
+### 2) Rename header and country names
+Rename header from “Variables” to “Country” and delete “Thousands Dollars” in each row.
+image: ![](Images/6.png) 
+
+
+
 
 
 
