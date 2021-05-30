@@ -1,0 +1,71 @@
+---
+title: "DataViz Makeover 1"
+description: |
+  Analyze the changes in Singapore's import and export trade in 2019 and 2020.
+author:
+  - name: Yu Yaxin
+  
+date: 05-30-2021
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+Distill is a publication format for scientific and technical writing, native to the web.
+
+Learn more about using Distill at <https://rstudio.github.io/distill>.
+
+# 1. Critic the Original Visualisation
+image: ![](Images/1.png) 
+The dataset used in above graph is provided by the Department of Statistics, Singapore, which illustrated the external trade among different countries and regions, including the numbers of dollars of total merchandise imports and exports from 1976 to 2021, explained the trade flows between Singapore and different markets.
+
+## 1.1 Clarity
+### 1) Inexact title
+The title of this graph is not so precise and consistent with the content. The directivity of the question is not obvious. It is not clear exactly who is these countries' trade with, whether it is the value of their own imports and exports or the value of their trade with Singapore, and meanwhile, the exactly meaning of “top” is not well-directed, is the top number of goods or the top volume of money.  
+
+**Suggestion**: Add the detail sub title, change the meaning of the title, and add the subject.
+
+### 2) Vertical axis lacks label’s units
+The vertical axis "0M, 2M, 4M..."and other numbers, the meaning of these expressions are not clear enough, lack of numerical units. Readers do not know whether these figures represent the number of imports and exports of goods or the total amount of trade between Singapore and these countries. Because lack of specific labels, failed to convey effective information to the readers and the purpose is unclear.
+
+**Suggestion**:Add the units of the coordinate axis to clarify the specific meaning of the number - representing the amount of trade transactions.
+
+### 3) Japan's graph has only one year of data
+Japan had no data missing from the original dataset, and the other five countries all analyzed two years of complete data, so it is important to make sure that the analysis for all six countries comes from the same time period as possible.
+
+**Suggestion**:Add data for 2019
+
+### 4) Different two-side tick marks in vertical axis
+From the original graph, it is not hard to see that the axis label on both sides of the vertical axis in two countries, Hong Kong and Taiwan are different. And the width of the tick marks on both sides of the vertical axis in the rest four countries are also inconsonant. This setting may cause the trend line inside the graph to deviate from the correct direction, and it is difficult to directly compare the differences in the value of imports and exports.
+
+**Suggestion**:Modify the vertical axis to a uniform range; Change the two axes into one axis.
+
+## 1.2 Aesthetics
+### 1) Area chart may not be a very appropriate visualization method
+Because the data is intended to show time-series changing and comparing import and export amounts, the use of area chart will cause trouble for readers to read, making the information of the whole graph not very clear. Meanwhile, it is quite misleading and unclear to use shadows to represent the difference, because the shadow is not only hard to identify but also cannot precisely reflect the changing of difference between import and export monthly.
+
+**Suggestion**:Create two-line charts show the change of the import and export volume of each market in 2019 and 2020, while a bar chart shows the difference between the export volume and the import volume.
+
+### 2) Unclear axis title
+The title on the Y-axis doesn't show what the meaning and unit of the number is, so it is kind of confused to read.
+
+**Suggestion**:Modify the Y axis title and add units.
+
+### 3) Missing necessary commentary and annotation
+The whole graph has not highlight necessary and concise commentary and annotation.
+
+**Suggestion**:Add the necessary commentary and reader-friendly annotation according to the final chart.
+
+### 4) Not suitable for the current graph color matching
+There is no big problem with the color matching between blue and orange. However, as he tried to use shadow to show trade surplus deficit, orange will cover blue, causing confusion between the color of shadow and orange, which is not easy to read.
+
+**Suggestion**: Modify color combinations to better match and fit.
+
+
+
+
