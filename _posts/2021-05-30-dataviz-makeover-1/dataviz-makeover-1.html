@@ -1480,7 +1480,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <p>Distill is a publication format for scientific and technical writing, native to the web.</p>
 <p>Learn more about using Distill at <a href="https://rstudio.github.io/distill" class="uri">https://rstudio.github.io/distill</a>.</p>
 <h1 id="critic-the-original-visualisation">1. Critic the Original Visualisation</h1>
-<p>image: <img src="Images/1.png" /> The dataset used in above graph is provided by the Department of Statistics, Singapore, which illustrated the external trade among different countries and regions, including the numbers of dollars of total merchandise imports and exports from 1976 to 2021, explained the trade flows between Singapore and different markets.</p>
+<p><img src="Images/1.png" /> The dataset used in above graph is provided by the Department of Statistics, Singapore, which illustrated the external trade among different countries and regions, including the numbers of dollars of total merchandise imports and exports from 1976 to 2021, explained the trade flows between Singapore and different markets.</p>
 <h2 id="clarity">1.1 Clarity</h2>
 <h3 id="inexact-title">1)Inexact title</h3>
 <p>The title of this graph is not so precise and consistent with the content. The directivity of the question is not obvious. It is not clear exactly who is these countries’ trade with, whether it is the value of their own imports and exports or the value of their trade with Singapore, and meanwhile, the exactly meaning of “top” is not well-directed, is the top number of goods or the top volume of money.</p>
@@ -1509,7 +1509,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <p><strong>Suggestion</strong>: Modify color combinations to better match and fit.</p>
 <h1 id="proposed-data-visualisation">2.Proposed Data Visualisation</h1>
 <h2 id="a-sketch-of-proposed-design">2.1 A sketch of proposed design</h2>
-<p>image: <img src="Images/2.jpg" /></p>
+<p><img src="Images/2.jpg" /></p>
 <h2 id="advantages-of-proposed-design">2.2 Advantages of proposed design</h2>
 <h3 id="improved-the-correctness-of-graph-title">1)Improved the correctness of graph title:</h3>
 <p>Add more detailed sub titles and the readers can more clearly understand the main purpose and the content of the chart.</p>
@@ -1522,49 +1522,51 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <h3 id="more-information-is-showed-from-dataset">5) More information is showed from Dataset</h3>
 <p>It reflects the trend of trade volume between Singapore and six major markets, and more intuitively reflects the relationship between exports and imports in different markets in different months.</p>
 <h1 id="data-visualisation">3. Data Visualisation</h1>
-<p>The data file consists of three worksheets: Content, T1 and T2. First need to rename T1 to Import and T2 to Export, then delete useless worksheet Content. image: <img src="Images/3.png" /> These two datasets include data for 119 countries and regions from January 1976 to April 2021.</p>
+<p>The data file consists of three worksheets: Content, T1 and T2. First need to rename T1 to Import and T2 to Export, then delete useless worksheet Content. <img src="Images/3.png" /> These two datasets include data for 119 countries and regions from January 1976 to April 2021.</p>
 <p>The final visualisation consists of three parts, which are<br />
 Table 1 – Changes of export value in Singapore.<br />
 Table 2 – Changes of import value in Singapore.<br />
 Table 3 – Changes of balance of trade.</p>
 <h2 id="data-preparation">3.1 Data Preparation</h2>
 <p><strong>For Import dataset (Table 2)</strong></p>
-<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD 1) Remove redundant columns and rows. ======= 1)Remove redundant columns and rows. &gt;&gt;&gt;&gt;&gt;&gt;&gt; c844d8ee66f437d20b9e398bbc209cc82d656130 Delete extra columns and only keep data from January 2019 to December 2020.<br />
-image: <img src="Images/4.png" /></p>
-<p>Use Filter to delete data of other markets, leaving only six rows of data – Hong Kong, Mainland China, Japan, Taiwan, Malaysia and U.S. image: <img src="Images/5.png" /></p>
-<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD 2) Rename header and country names Rename header from “Variables” to “Markets” and delete “Thousands Dollars” in each row. image: <img src="Images/6.png" /></p>
-<h1 id="transpose-dataset">3) Transpose dataset</h1>
-<p>2)Rename header and country names Rename header from “Variables” to “Markets” and delete “Thousands Dollars” in each row. image: <img src="Images/6.png" /></p>
-<p>3)Transpose dataset &gt;&gt;&gt;&gt;&gt;&gt;&gt; c844d8ee66f437d20b9e398bbc209cc82d656130 For better identification in Tableau, we need each country as a column and each time as a column, so copy all the data in Excel first and then use Transpose function to process the data.<br />
-image: <img src="Images/7.png" /><br />
+<p>1)Remove redundant columns and rows. Delete extra columns and only keep data from January 2019 to December 2020.<br />
+<img src="Images/4.png" /></p>
+<p>Use Filter to delete data of other markets, leaving only six rows of data – Hong Kong, Mainland China, Japan, Taiwan, Malaysia and U.S.<br />
+<img src="Images/5.png" /></p>
+<ol start="2" type="1">
+<li>Rename header and country names Rename header from “Variables” to “Markets” and delete “Thousands Dollars” in each row. <img src="Images/6.png" /></li>
+</ol>
+<p>3)Transpose dataset For better identification in Tableau, we need each country as a column and each time as a column, so copy all the data in Excel first and then use Transpose function to process the data.<br />
+<img src="Images/7.png" /><br />
 Then rename the headers the new dataset showing as following:<br />
-image: <img src="Images/8.png" /></p>
-<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD <strong>For Export dataset (Table 1)</strong></p>
-<h1 id="repeat-the-same-three-steps-in-import-dataset">1) Repeat the same three steps in Import dataset</h1>
-<p><strong>For export dataset (Table 1)</strong></p>
-<p>1)Repeat the same three steps in Import dataset &gt;&gt;&gt;&gt;&gt;&gt;&gt; c844d8ee66f437d20b9e398bbc209cc82d656130 image: <img src="Images/9.png" /></p>
+<img src="Images/8.png" /></p>
+<p><strong>For Export dataset (Table 1)</strong><br />
+1)Repeat the same three steps in Import dataset <img src="Images/9.png" /></p>
 <p><strong>For Table 3</strong></p>
-<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD 1) Create new worksheet to calculate the difference ======= 1)Create new worksheet to calculate the difference &gt;&gt;&gt;&gt;&gt;&gt;&gt; c844d8ee66f437d20b9e398bbc209cc82d656130 Create a new worksheet called “Balance of Trade” and use function “Export minus Import” to calculate the difference.</p>
-<p>If exports are greater than imports, that means the difference is greater than zero, then Singapore has achieved a Trade surplus in this period. If exports are smaller than imports, that means the difference is less than zero. This indicates that Singapore has a trade deficit with the country during this period. image: <img src="Images/10.png" /></p>
-<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD 2) Save the new Excel file as “Trade Data” and derive new Tableau workbook then import the file.</p>
+<p>1)Create new worksheet to calculate the difference Create a new worksheet called “Balance of Trade” and use function “Export minus Import” to calculate the difference.</p>
+<p>If exports are greater than imports, that means the difference is greater than zero, then Singapore has achieved a Trade surplus in this period. If exports are smaller than imports, that means the difference is less than zero. This indicates that Singapore has a trade deficit with the country during this period. <img src="Images/10.png" /></p>
+<ol start="2" type="1">
+<li>Save the new Excel file as “Trade Data” and derive new Tableau workbook then import the file.</li>
+</ol>
 <h2 id="data-visualisation-1">3.2 Data Visualisation</h2>
 <ol type="1">
-<li><p>Create relationship between these three datasets Combine these three datasets by using column “Time”. image: <img src="Images/11.png" /></p></li>
-<li><p>Pivot two datasets Because countries from Malaysia to the U.S are spread across multiple columns, we need to select the them then right click and use “Pivot” to change it in the correct format. Repeat this step in “Import” and “Export” datasets. image: <img src="Images/12.png" /></p></li>
-<li><p>Rename headers For Export dataset, rename the first “Pivot Field Names” to “Market” and rename the second “Pivot Field Values” to “Amount”. image: <img src="Images/13.png" /></p></li>
+<li><p>Create relationship between these three datasets.<br />
+Combine these three datasets by using column “Time”. <img src="Images/11.png" /></p></li>
+<li><p>Pivot two datasets Because countries from Malaysia to the U.S are spread across multiple columns, we need to select the them then right click and use “Pivot” to change it in the correct format. Repeat this step in “Import” and “Export” datasets. <img src="Images/12.png" /></p></li>
+<li><p>Rename headers For Export dataset, rename the first “Pivot Field Names” to “Market” and rename the second “Pivot Field Values” to “Amount”. <img src="Images/13.png" /></p></li>
 </ol>
 <p>And also do the same step in the Import datasets, rename the first “Pivot Field Values” to “Market 2”, the second to “Amount 2” respectively.</p>
 <p><strong>For Export dataset (table 1)</strong></p>
 <p>Create new sheet and name as “Export”.</p>
 <ol type="1">
 <li><p>Change data type<br />
-Change “Time” data type from string to date, and change “Export Trade Amounts” data type to “Number (whole)” then to the right side click “Convert to Continuous”. image: <img src="Images/14.png" /></p></li>
-<li><p>Create line chart Drag “Time” and “Export Trade Amount” to Columns and Rows respectively. Then change the format of “Time”. Click the little arrow of “Year (Time)” change Time to Year and next Time to Month. image: <img src="Images/15.png" /></p></li>
+Change “Time” data type from string to date, and change “Export Trade Amounts” data type to “Number (whole)” then to the right side click “Convert to Continuous”. <img src="Images/14.png" /></p></li>
+<li><p>Create line chart Drag “Time” and “Export Trade Amount” to Columns and Rows respectively. Then change the format of “Time”. Click the little arrow of “Year (Time)” change Time to Year and next Time to Month. <img src="Images/15.png" /></p></li>
 <li><p>Change the months in X-axis into numbers Right click on the X-axis =&gt; Format =&gt; Dates =&gt; Numeric.<br />
-image: <img src="Images/16.png" /></p></li>
+<img src="Images/16.png" /></p></li>
 <li><p>Apply Color Drag “Market” to color option, change “Automatic” to “Line” and change “Markers” to the second option, which in order to more clearly correspond to each time node.</p></li>
 <li><p>Change the number format. Right click on Y-axis =&gt; Format, then go to pane option, change the Numbers to Currency (Standard) =&gt; English (Singapore).<br />
-image: <img src="Images/18.png" /></p></li>
+<img src="Images/18.png" /></p></li>
 <li><p>Change “Standard” to “Fit Height”</p></li>
 <li><p>Add title Add title - Changes of export value in Singapore. Next to adjusted the title to right color, location and size.</p></li>
 </ol>
@@ -1578,15 +1580,15 @@ image: <img src="Images/18.png" /></p></li>
 <li>Change data type Change Time from String to Date, change Japan, Taiwan, Malaysia, United States, Mainland China and Hong Kong from String to Number (whole), and convert all to continuous.</li>
 </ol>
 <p>And as showing in the previous step, click on the small arrow changing Time to Month format.<br />
-image: <img src="Images/19.png" /></p>
+<img src="Images/19.png" /></p>
 <ol start="2" type="1">
-<li><p>Create bar chart Drag “Time” and “Hong Kong, Japan, Mainland China, Malaysia, Taiwan and United State” to Columns and Rows respectively. Change Time to Year and next Time to Month. image: <img src="Images/20.png" /></p></li>
+<li><p>Create bar chart Drag “Time” and “Hong Kong, Japan, Mainland China, Malaysia, Taiwan and United State” to Columns and Rows respectively. Change Time to Year and next Time to Month. <img src="Images/20.png" /></p></li>
 <li><p>Apply colors one by one. Drag country name to Color option, double-click on Legend on the right, edit color to 2 steps – Positive difference is dark blue, negative is light blue.<br />
-Apply the same color group in each country. image: <img src="Images/21.png" /></p></li>
+Apply the same color group in each country. <img src="Images/21.png" /></p></li>
 <li><p>Adjust the range of the Y axis Except Hong Kong and Taiwan, to adjust the range of the rest five countries to be the same. Edit axis range to Fixed and start with -2,492,896 (the lowest value of a negative number in the five countries Automatic), end with 2574795 (the largest positive number of automatic in five countries). And for Hong Kong, only change the Fixed end with -1000000, for Taiwan, start to 1000000.<br />
-image: <img src="Images/22.png" /></p></li>
+<img src="Images/22.png" /></p></li>
 <li><p>Add annotation A positive value above the zero mark indicates a trade surplus, while a negative value below indicates a trade deficit.<br />
-image: <img src="Images/23.png" /></p></li>
+<img src="Images/23.png" /></p></li>
 <li><p>Change the months in X-axis into numbers Right click on the X-axis =&gt; Format =&gt; Dates =&gt; Numeric.</p></li>
 <li><p>Add title Add title: Changes of balance of trade.</p></li>
 </ol>
@@ -1603,7 +1605,7 @@ Add sub title of Y-axis in Export and Import graphs. Sub title: $thousands.</p><
 Source: Statistic Singapore<a href="https://www.singstat.gov.sg/">Link</a></p></li>
 </ol>
 <h2 id="final-visualisation">3.3 Final Visualisation</h2>
-<p>image: <img src="Images/24.png" /></p>
+<p><img src="Images/24.png" /></p>
 <h1 id="observations">4 Observations</h1>
 <h2 id="singapores-main-trading-partner-is-mainland-china">4.1 Singapore’s main trading partner is Mainland China</h2>
 <p>As can be seen from the line chart on the right, trade between China and Singapore is the largest in both 2019 and 2020. Exports fluctuated from January to July 2019, rising significantly until July, and then dropping to normal levels in August. Exports began to rise slowly after August. And the same trend is seen in 2020 too. Although the export volume of Singapore to the Mainland China declined slightly from January to May 2020, it has seen a significant increase since July, and its export volume is much higher than that of the second place Hong Kong.</p>
