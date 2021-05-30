@@ -16,10 +16,6 @@ output:
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-Distill is a publication format for scientific and technical writing, native to the web.
-
-Learn more about using Distill at <https://rstudio.github.io/distill>.
-
 # 1. Critic the Original Visualisation
 ![](Images/1.png) 
 The dataset used in above graph is provided by the Department of Statistics, Singapore, which illustrated the external trade among different countries and regions, including the numbers of dollars of total merchandise imports and exports from 1976 to 2021, explained the trade flows between Singapore and different markets.
