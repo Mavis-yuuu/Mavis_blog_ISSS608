@@ -117,7 +117,11 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
+<<<<<<< HEAD
   {"type":"character","attributes":{},"value":["dataviz-makeover-1_files/anchor-4.2.2/anchor.min.js","dataviz-makeover-1_files/bowser-1.9.3/bowser.min.js","dataviz-makeover-1_files/distill-2.2.21/template.v2.js","dataviz-makeover-1_files/jquery-1.11.3/jquery.min.js","dataviz-makeover-1_files/popper-2.6.0/popper.min.js","dataviz-makeover-1_files/tippy-6.2.7/tippy-bundle.umd.min.js","dataviz-makeover-1_files/tippy-6.2.7/tippy-light-border.css","dataviz-makeover-1_files/tippy-6.2.7/tippy.css","dataviz-makeover-1_files/tippy-6.2.7/tippy.umd.min.js","dataviz-makeover-1_files/webcomponents-2.0.0/webcomponents.js","Images/1.png","Images/10.png","Images/11.png","Images/12.png","Images/13.png","Images/14.png","Images/15.png","Images/16.png","Images/17.png","Images/18.png","Images/19.png","Images/2.jpg","Images/20.png","Images/21.png","Images/22.png","Images/23.png","Images/24.png","Images/3.png","Images/4.png","Images/5.png","Images/6.png","Images/7.png","Images/8.png","Images/9.png"]}
+=======
+  {"type":"character","attributes":{},"value":["dataviz-makeover-1_files/anchor-4.2.2/anchor.min.js","dataviz-makeover-1_files/bowser-1.9.3/bowser.min.js","dataviz-makeover-1_files/distill-2.2.21/template.v2.js","dataviz-makeover-1_files/jquery-1.11.3/jquery.min.js","dataviz-makeover-1_files/popper-2.6.0/popper.min.js","dataviz-makeover-1_files/tippy-6.2.7/tippy-bundle.umd.min.js","dataviz-makeover-1_files/tippy-6.2.7/tippy-light-border.css","dataviz-makeover-1_files/tippy-6.2.7/tippy.css","dataviz-makeover-1_files/tippy-6.2.7/tippy.umd.min.js","dataviz-makeover-1_files/webcomponents-2.0.0/webcomponents.js","Images/1.png","Images/10.png","Images/11.png","Images/12.png","Images/13.png","Images/2.jpg","Images/3.png","Images/4.png","Images/5.png","Images/6.png","Images/7.png","Images/8.png","Images/9.png"]}
+>>>>>>> c844d8ee66f437d20b9e398bbc209cc82d656130
   </script>
   <!--radix_placeholder_navigation_in_header-->
 <meta name="distill:offset" content="../.."/>
@@ -2103,42 +2107,42 @@ document.addEventListener('DOMContentLoaded', function() {
 <h1 id="critic-the-original-visualisation">1. Critic the Original Visualisation</h1>
 <p>image: <img src="Images/1.png" /> The dataset used in above graph is provided by the Department of Statistics, Singapore, which illustrated the external trade among different countries and regions, including the numbers of dollars of total merchandise imports and exports from 1976 to 2021, explained the trade flows between Singapore and different markets.</p>
 <h2 id="clarity">1.1 Clarity</h2>
-<h3 id="inexact-title">1) Inexact title</h3>
+<h3 id="inexact-title">1)Inexact title</h3>
 <p>The title of this graph is not so precise and consistent with the content. The directivity of the question is not obvious. It is not clear exactly who is these countries’ trade with, whether it is the value of their own imports and exports or the value of their trade with Singapore, and meanwhile, the exactly meaning of “top” is not well-directed, is the top number of goods or the top volume of money.</p>
 <p><strong>Suggestion</strong>: Add the detail sub title, change the meaning of the title, and add the subject.</p>
-<h3 id="vertical-axis-lacks-labels-units">2) Vertical axis lacks label’s units</h3>
+<h3 id="vertical-axis-lacks-labels-units">2)Vertical axis lacks label’s units</h3>
 <p>The vertical axis “0M, 2M, 4M…”and other numbers, the meaning of these expressions are not clear enough, lack of numerical units. Readers do not know whether these figures represent the number of imports and exports of goods or the total amount of trade between Singapore and these countries. Because lack of specific labels, failed to convey effective information to the readers and the purpose is unclear.</p>
 <p><strong>Suggestion</strong>:Add the units of the coordinate axis to clarify the specific meaning of the number - representing the amount of trade transactions.</p>
-<h3 id="japans-graph-has-only-one-year-of-data">3) Japan’s graph has only one year of data</h3>
+<h3 id="japans-graph-has-only-one-year-of-data">3)Japan’s graph has only one year of data</h3>
 <p>Japan had no data missing from the original dataset, and the other five countries all analyzed two years of complete data, so it is important to make sure that the analysis for all six countries comes from the same time period as possible.</p>
 <p><strong>Suggestion</strong>:Add data for 2019</p>
-<h3 id="different-two-side-tick-marks-in-vertical-axis">4) Different two-side tick marks in vertical axis</h3>
+<h3 id="different-two-side-tick-marks-in-vertical-axis">4)Different two-side tick marks in vertical axis</h3>
 <p>From the original graph, it is not hard to see that the axis label on both sides of the vertical axis in two countries, Hong Kong and Taiwan are different. And the width of the tick marks on both sides of the vertical axis in the rest four countries are also inconsonant. This setting may cause the trend line inside the graph to deviate from the correct direction, and it is difficult to directly compare the differences in the value of imports and exports.</p>
 <p><strong>Suggestion</strong>:Modify the vertical axis to a uniform range; Change the two axes into one axis.</p>
 <h2 id="aesthetics">1.2 Aesthetics</h2>
-<h3 id="area-chart-may-not-be-a-very-appropriate-visualization-method">1) Area chart may not be a very appropriate visualization method</h3>
+<h3 id="area-chart-may-not-be-a-very-appropriate-visualization-method">1)Area chart may not be a very appropriate visualization method</h3>
 <p>Because the data is intended to show time-series changing and comparing import and export amounts, the use of area chart will cause trouble for readers to read, making the information of the whole graph not very clear. Meanwhile, it is quite misleading and unclear to use shadows to represent the difference, because the shadow is not only hard to identify but also cannot precisely reflect the changing of difference between import and export monthly.</p>
 <p><strong>Suggestion</strong>:Create two-line charts show the change of the import and export volume of each market in 2019 and 2020, while a bar chart shows the difference between the export volume and the import volume.</p>
-<h3 id="unclear-axis-title">2) Unclear axis title</h3>
+<h3 id="unclear-axis-title">2)Unclear axis title</h3>
 <p>The title on the Y-axis doesn’t show what the meaning and unit of the number is, so it is kind of confused to read.</p>
 <p><strong>Suggestion</strong>:Modify the Y axis title and add units.</p>
-<h3 id="missing-necessary-commentary-and-annotation">3) Missing necessary commentary and annotation</h3>
+<h3 id="missing-necessary-commentary-and-annotation">3)Missing necessary commentary and annotation</h3>
 <p>The whole graph has not highlight necessary and concise commentary and annotation.</p>
 <p><strong>Suggestion</strong>:Add the necessary commentary and reader-friendly annotation according to the final chart.</p>
-<h3 id="not-suitable-for-the-current-graph-color-matching">4) Not suitable for the current graph color matching</h3>
+<h3 id="not-suitable-for-the-current-graph-color-matching">4)Not suitable for the current graph color matching</h3>
 <p>There is no big problem with the color matching between blue and orange. However, as he tried to use shadow to show trade surplus deficit, orange will cover blue, causing confusion between the color of shadow and orange, which is not easy to read.</p>
 <p><strong>Suggestion</strong>: Modify color combinations to better match and fit.</p>
 <h1 id="proposed-data-visualisation">2.Proposed Data Visualisation</h1>
 <h2 id="a-sketch-of-proposed-design">2.1 A sketch of proposed design</h2>
 <p>image: <img src="Images/2.jpg" /></p>
 <h2 id="advantages-of-proposed-design">2.2 Advantages of proposed design</h2>
-<h3 id="improved-the-correctness-of-graph-title">1) Improved the correctness of graph title:</h3>
+<h3 id="improved-the-correctness-of-graph-title">1)Improved the correctness of graph title:</h3>
 <p>Add more detailed sub titles and the readers can more clearly understand the main purpose and the content of the chart.</p>
-<h3 id="select-a-combination-of-line-chart-and-bar-chart-to-visualize-data">2) Select a combination of line chart and bar chart to visualize data:</h3>
+<h3 id="select-a-combination-of-line-chart-and-bar-chart-to-visualize-data">2)Select a combination of line chart and bar chart to visualize data:</h3>
 <p>The expansion of one chart into three i. clearly shows the trend and size of each region’s trade in 2019 and 2020; ii. more intuitively shows the positive and negative values of the trade to identify the trade is deficit or not.</p>
-<h3 id="well-defined-axis-label-and-appropriate-thick-marks">3) Well defined axis label and appropriate thick marks:</h3>
+<h3 id="well-defined-axis-label-and-appropriate-thick-marks">3)Well defined axis label and appropriate thick marks:</h3>
 <p>The previous chart lacked units on the vertical axis, so the numerical significance of the vertical axis was not clear. The addition of units and unified thick marks made it more convenient to compare the difference value of each region.</p>
-<h3 id="improved-color-matching">4) Improved color matching:</h3>
+<h3 id="improved-color-matching">4)Improved color matching:</h3>
 <p>Adopted a more harmonious color match than before to increase the aesthetic.</p>
 <h3 id="more-information-is-showed-from-dataset">5) More information is showed from Dataset</h3>
 <p>It reflects the trend of trade volume between Singapore and six major markets, and more intuitively reflects the relationship between exports and imports in different markets in different months.</p>
@@ -2150,6 +2154,7 @@ Table 2 – Changes of import value in Singapore.<br />
 Table 3 – Changes of balance of trade.</p>
 <h2 id="data-preparation">3.1 Data Preparation</h2>
 <p><strong>For Import dataset (Table 2)</strong></p>
+<<<<<<< HEAD
 <ol type="1">
 <li>Remove redundant columns and rows. Delete extra columns and only keep data from January 2019 to December 2020.<br />
 image: <img src="Images/4.png" /></li>
@@ -2239,6 +2244,26 @@ Source: Statistic Singapore<a href="https://www.singstat.gov.sg/">Link</a></p></
 <p>As can be seen from the bar chart on the left, both in 2019 and 2020, Singapore’s imports are greater than exports, presenting a trade deficit with Taiwan. The exact opposite situation appears in the trade between Singapore and Hong Kong - for two years, exports exceeded imports, that is, trade surplus, showing a high profit pattern.</p>
 <h2 id="trade-deficits-are-more-common-in-2020-than-in-2019">4.3 Trade deficits are more common in 2020 than in 2019</h2>
 <p>Excluding two regions, Taiwan and Hong Kong, the bar chart with negative numbers in 2020 is more than that in 2019. As can be seen from the chart of the United States, both Singapore and the United States had a trade surplus throughout 2019. However, since 2020, the net export volume has been decreasing month by month, and it has been in a trade deficit since April. Although the net export volume was slightly positive in September and October, it still fell back to the state of exports being less than imports. It has had a trade surplus with China since August, but has been in deficit with Malaysia since 2020.</p>
+=======
+<p>1)Remove redundant columns and rows. Delete extra columns and only keep data from January 2019 to December 2020.<br />
+image: <img src="Images/4.png" /></p>
+<p>Use Filter to delete data of other markets, leaving only six rows of data – Hong Kong, Mainland China, Japan, Taiwan, Malaysia and U.S. image: <img src="Images/5.png" /></p>
+<p>2)Rename header and country names Rename header from “Variables” to “Markets” and delete “Thousands Dollars” in each row. image: <img src="Images/6.png" /></p>
+<p>3)Transpose dataset For better identification in Tableau, we need each country as a column and each time as a column, so copy all the data in Excel first and then use Transpose function to process the data.<br />
+image: <img src="Images/7.png" /><br />
+Then rename the headers the new dataset showing as following:<br />
+image: <img src="Images/8.png" /></p>
+<p><strong>For export dataset (Table 1)</strong></p>
+<p>1)Repeat the same three steps in Import dataset image: <img src="Images/9.png" /></p>
+<p><strong>For Table 3</strong></p>
+<p>1)Create new worksheet to calculate the difference Create a new worksheet called “Balance of Trade” and use function “Export minus Import” to calculate the difference.</p>
+<p>If exports are greater than imports, that means the difference is greater than zero, then Singapore has achieved a Trade surplus in this period. If exports are smaller than imports, that means the difference is less than zero. This indicates that Singapore has a trade deficit with the country during this period. image: <img src="Images/10.png" /></p>
+<p>2)Save the new Excel file as “Trade Data” and derive new Tableau workbook then import the file.</p>
+<h2 id="data-visualisation-1">3.2 Data Visualisation</h2>
+<p>1)Create relationship between these three datasets Combine these three datasets by using column “Time”. image: <img src="Images/11.png" /></p>
+<p>2)Pivot two datasets Because countries from Malaysia to the U.S are spread across multiple columns, we need to select the them then right click and use “Pivot” to change it in the correct format. Repeat this step in “Import” and “Export” datasets. image: <img src="Images/12.png" /></p>
+<p>3)Rename headers For Export dataset, rename the first “Pivot Field Names” to “Market” and rename the second “Pivot Field Values” to “Amount”. image: <img src="Images/13.png" /></p>
+>>>>>>> c844d8ee66f437d20b9e398bbc209cc82d656130
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
