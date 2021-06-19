@@ -17,5 +17,12 @@ knitr::opts_chunk$set(echo = FALSE)
 ```
 
 # 1. The original visualization
+![](Images/1.png)
+The data comes from the [Singapore Statistic](https://www.singstat.gov.sg/find-data/search-by-theme/trade-and-investment/merchandise-trade/latest-data), which records the monthly volume of imports and exports of Singapore by varies of regions/markets from January 1976 to April 2021. And this report is going to visualize the merchandise trade changes between different countries with Singapore during 2011 to 2020.
 
-
+# 2.Comments on the clarity and aesthetics.
+## 2.1 Clarity
+No.|                  Critiques                       |Suggestion
+---|--------------------------------------------------|-----------------------
+1  |**The solid circles showed transaction volume of different regions covered each other.** Such as EU, more than half of the dark blue one has covered by United States, the turquoise circle. The same thing happened in Republic of Korea, which was almost entirely covered by Japan. This leads to an incomplete representation of the trade volume information in the diagram, readers cannot compare the size of transactions in different regions.|We can filter different countries in Tableau in order to choosing either individual countries or all of those.
+2  |

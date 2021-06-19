@@ -116,7 +116,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"NULL"}
+  {"type":"character","attributes":{},"value":["dataviz-makeover-2_files/anchor-4.2.2/anchor.min.js","dataviz-makeover-2_files/bowser-1.9.3/bowser.min.js","dataviz-makeover-2_files/distill-2.2.21/template.v2.js","dataviz-makeover-2_files/jquery-1.11.3/jquery.min.js","dataviz-makeover-2_files/popper-2.6.0/popper.min.js","dataviz-makeover-2_files/tippy-6.2.7/tippy-bundle.umd.min.js","dataviz-makeover-2_files/tippy-6.2.7/tippy-light-border.css","dataviz-makeover-2_files/tippy-6.2.7/tippy.css","dataviz-makeover-2_files/tippy-6.2.7/tippy.umd.min.js","dataviz-makeover-2_files/webcomponents-2.0.0/webcomponents.js","Images/1.png"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1478,6 +1478,35 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 <div class="d-article">
 <h1 id="the-original-visualization">1. The original visualization</h1>
+<p><img src="Images/1.png" /> The data comes from the <a href="https://www.singstat.gov.sg/find-data/search-by-theme/trade-and-investment/merchandise-trade/latest-data">Singapore Statistic</a>, which records the monthly volume of imports and exports of Singapore by varies of regions/markets from January 1976 to April 2021. And this report is going to visualize the merchandise trade changes between different countries with Singapore during 2011 to 2020.</p>
+<h1 id="comments-on-the-clarity-and-aesthetics.">2.Comments on the clarity and aesthetics.</h1>
+<h2 id="clarity">2.1 Clarity</h2>
+<table>
+<colgroup>
+<col style="width: 3%" />
+<col style="width: 65%" />
+<col style="width: 30%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>No.</th>
+<th>Critiques</th>
+<th>Suggestion</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td><strong>The solid circles showed transaction volume of different regions covered each other.</strong> Such as EU, more than half of the dark blue one has covered by United States, the turquoise circle. The same thing happened in Republic of Korea, which was almost entirely covered by Japan. This leads to an incomplete representation of the trade volume information in the diagram, readers cannot compare the size of transactions in different regions.</td>
+<td>We can filter different countries in Tableau in order to choosing either individual countries or all of those.</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
