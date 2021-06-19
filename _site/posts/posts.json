@@ -1,5 +1,22 @@
 [
   {
+    "path": "posts/2021-06-20-dataviz-makeover-2/",
+    "title": "DataViz Makeover 2",
+    "description": "A short description of the post.",
+    "author": [
+      {
+        "name": "Yu Yaxin",
+        "url": {}
+      }
+    ],
+    "date": "2021-06-20",
+    "categories": [],
+    "contents": "\r\n1. The original visualization\r\n\r\n\r\n\r\n",
+    "preview": {},
+    "last_modified": "2021-06-20T02:25:26+08:00",
+    "input_file": "dataviz-makeover-2.utf8.md"
+  },
+  {
     "path": "posts/2021-05-30-dataviz-makeover-1/",
     "title": "DataViz Makeover 1",
     "description": "Analyze the changes in Singapore's import and export trade in 2019 and 2020.",

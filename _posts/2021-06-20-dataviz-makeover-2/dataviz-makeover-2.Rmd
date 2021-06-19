@@ -1,0 +1,21 @@
+---
+title: "DataViz Makeover 2"
+description: |
+  A short description of the post.
+author:
+  - name: Yu Yaxin
+    url: {}
+date: 06-20-2021
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# 1. The original visualization
+
+
