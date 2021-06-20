@@ -1480,7 +1480,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <h1 id="the-original-visualization">1. The original visualization</h1>
 <p><img src="Images/1.png" /> The data comes from the <a href="https://www.singstat.gov.sg/find-data/search-by-theme/trade-and-investment/merchandise-trade/latest-data">Singapore Statistic</a>, which records the monthly volume of imports and exports of Singapore by varies of regions/markets from January 1976 to April 2021. And this report is going to visualize the merchandise trade changes between different countries with Singapore during 2011 to 2020.</p>
 <h1 id="comments-on-the-clarity-and-aesthetics.">2.Comments on the clarity and aesthetics.</h1>
-<h2 id="clarity">2.1 Clarity</h2>
+<h3 id="clarity">2.1 Clarity</h3>
 <table>
 <colgroup>
 <col style="width: 3%" />
@@ -1502,8 +1502,55 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </tr>
 <tr class="even">
 <td>2</td>
-<td></td>
-<td></td>
+<td><strong>The content of commentary and chart are inconsistent. </strong>Commentary should be based on the charts that have been made. The original chart did not show any information about changes of dates (years), but commentary mentions two specific years which is 2006 and 2009, are not supported by chart data.</td>
+<td>Commentary is written based on the content of Graph to supplement interesting observations of details in Graph, so we can focus on main observations.</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td><strong>lack of indicating which time periods are used in the chart. </strong>The original Visualization did not specify the period of time for the merchandise trade being studied, and also lacked clear notations. Therefore, it will cause misunderstanding for readers.</td>
+<td>Change the form to interactive visualization, highlights the time change by turning the time into a reader-selectable option.</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td><strong>Missing graph title. </strong>The original graph did not set an appropriate title to summarize the main content, so is short of highlighting the point that intended to express.</td>
+<td>Add appropriate graph title.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="aesthetics">2.2 Aesthetics</h3>
+<table>
+<colgroup>
+<col style="width: 3%" />
+<col style="width: 65%" />
+<col style="width: 30%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>No.</th>
+<th>Aesthetics</th>
+<th>Suggestion</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td><strong>The choice of background color is not appropriate. </strong>There are already varies of colors and labels of regions in the graph, and the light blue and green background colors that represent Net Import and Net Export belong to the same color range with some regions’ circles, hard for readers to clearly distinguish and makes the whole graph messy.</td>
+<td>Do not set another background color. Keep the transparent color.</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td><strong>Static bubble plot may not be the most appropriate visualization method.</strong>Because the raw data include the imports and exports volume changes through years between different regions and Singapore, the original chart does not capture this dynamic demand well.</td>
+<td>Add Animation funtion in Tableau.</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td><strong>Note’s position is not impressive enough. </strong>The font of notes is too small for the reader to recognize below the graph, and the position is also not so obvious.</td>
+<td>Change the Note in front of the graph or change the color and font of it.</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td><strong>Inappropriate location for axis title.</strong>Crossing titles on the horizontal and vertical axes in the lower left corner can be misleading, since Exports is more like vertical title, while Imports are closer to the horizontal axis. The locations need to be changed.</td>
+<td>Place the names of the axes halfway between the horizontal and vertical axes.</td>
 </tr>
 </tbody>
 </table>

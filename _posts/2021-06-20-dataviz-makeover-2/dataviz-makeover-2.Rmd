@@ -21,8 +21,18 @@ knitr::opts_chunk$set(echo = FALSE)
 The data comes from the [Singapore Statistic](https://www.singstat.gov.sg/find-data/search-by-theme/trade-and-investment/merchandise-trade/latest-data), which records the monthly volume of imports and exports of Singapore by varies of regions/markets from January 1976 to April 2021. And this report is going to visualize the merchandise trade changes between different countries with Singapore during 2011 to 2020.
 
 # 2.Comments on the clarity and aesthetics.
-## 2.1 Clarity
+### 2.1 Clarity
 No.|                  Critiques                       |Suggestion
 ---|--------------------------------------------------|-----------------------
 1  |**The solid circles showed transaction volume of different regions covered each other.** Such as EU, more than half of the dark blue one has covered by United States, the turquoise circle. The same thing happened in Republic of Korea, which was almost entirely covered by Japan. This leads to an incomplete representation of the trade volume information in the diagram, readers cannot compare the size of transactions in different regions.|We can filter different countries in Tableau in order to choosing either individual countries or all of those.
-2  |
+2  |**The content of commentary and chart are inconsistent. **Commentary should be based on the charts that have been made. The original chart did not show any information about changes of dates (years), but commentary mentions two specific years which is 2006 and 2009, are not supported by chart data. |Commentary is written based on the content of Graph to supplement interesting observations of details in Graph, so we can focus on main observations.
+3  |**lack of indicating which time periods are used in the chart. **The original Visualization did not specify the period of time for the merchandise trade being studied, and also lacked clear notations. Therefore, it will cause misunderstanding for readers. |Change the form to interactive visualization, highlights the time change by turning the time into a reader-selectable option.
+4  |**Missing graph title. **The original graph did not set an appropriate title to summarize the main content, so is short of highlighting the point that intended to express. | Add appropriate graph title.
+
+### 2.2 Aesthetics
+No.|                 Aesthetics                       |Suggestion
+---|--------------------------------------------------|-----------------------
+1  |**The choice of background color is not appropriate. **There are already varies of colors and labels of regions in the graph, and the light blue and green background colors that represent Net Import and Net Export belong to the same color range with some regions’ circles, hard for readers to clearly distinguish and makes the whole graph messy. |Do not set another background color. Keep the transparent color.
+2  |**Static bubble plot may not be the most appropriate visualization method.**Because the raw data include the imports and exports volume changes through years between different regions and Singapore, the original chart does not capture this dynamic demand well. |Add Animation funtion in Tableau.
+3  |**Note's position is not impressive enough. **The font of notes is too small for the reader to recognize below the graph, and the position is also not so obvious. |Change the Note in front of the graph or change the color and font of it.
+4  |**Inappropriate location for axis title.**Crossing titles on the horizontal and vertical axes in the lower left corner can be misleading, since Exports is more like vertical title, while Imports are closer to the horizontal axis. The locations need to be changed. |Place the names of the axes halfway between the horizontal and vertical axes.
