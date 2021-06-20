@@ -144,13 +144,17 @@ Right click on circles => Drop Lines => Show Drop Lines
 11. Add Labels
 Drag "Country_T" to Label
 
-12. Add Commentary
-From 2011 to 2014, Singapore's largest trading partner was Malaysia, and after 2014, mainland China became the largest trading partner.
-
 **For Dashboard**  
-1. Add Tittle
+1. Add Tittle  
 Add tittle: Changes of Merchandise Trade Volume with Singapore,2011-2020.
 
 2. Adjust the Legend
 Delete the Sum_Total panel
+
+3. Change the size
+Set the Size to "Automatic".
+
+4. Add Commentary  
+2011 - 2014, Singapore's largest trading partner was Malaysia, after 2014,
+mainland China became the largest trading partner.
 
