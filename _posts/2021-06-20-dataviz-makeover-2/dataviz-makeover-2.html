@@ -116,7 +116,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["dataviz-makeover-2_files/anchor-4.2.2/anchor.min.js","dataviz-makeover-2_files/bowser-1.9.3/bowser.min.js","dataviz-makeover-2_files/distill-2.2.21/template.v2.js","dataviz-makeover-2_files/jquery-1.11.3/jquery.min.js","dataviz-makeover-2_files/popper-2.6.0/popper.min.js","dataviz-makeover-2_files/tippy-6.2.7/tippy-bundle.umd.min.js","dataviz-makeover-2_files/tippy-6.2.7/tippy-light-border.css","dataviz-makeover-2_files/tippy-6.2.7/tippy.css","dataviz-makeover-2_files/tippy-6.2.7/tippy.umd.min.js","dataviz-makeover-2_files/webcomponents-2.0.0/webcomponents.js","Images/1.png","Images/10.png","Images/11.png","Images/12.png","Images/13.png","Images/14.png","Images/2.png","Images/3.png","Images/4.png","Images/5.png","Images/6.png","Images/7.png","Images/8.png","Images/9.png"]}
+  {"type":"character","attributes":{},"value":["dataviz-makeover-2_files/anchor-4.2.2/anchor.min.js","dataviz-makeover-2_files/bowser-1.9.3/bowser.min.js","dataviz-makeover-2_files/distill-2.2.21/template.v2.js","dataviz-makeover-2_files/jquery-1.11.3/jquery.min.js","dataviz-makeover-2_files/popper-2.6.0/popper.min.js","dataviz-makeover-2_files/tippy-6.2.7/tippy-bundle.umd.min.js","dataviz-makeover-2_files/tippy-6.2.7/tippy-light-border.css","dataviz-makeover-2_files/tippy-6.2.7/tippy.css","dataviz-makeover-2_files/tippy-6.2.7/tippy.umd.min.js","dataviz-makeover-2_files/webcomponents-2.0.0/webcomponents.js","Images/1.png","Images/10.png","Images/11.png","Images/12.png","Images/13.png","Images/14.png","Images/15.png","Images/16.png","Images/17.png","Images/18.png","Images/2.png","Images/3.png","Images/4.png","Images/5.png","Images/6.png","Images/7.png","Images/8.png","Images/9.png"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1592,9 +1592,14 @@ Add the Import and Export values for each country correspondingly in a new works
 <img src="Images/9.png" /></p></li>
 <li><p>Set size and color Drag “Country_T” to Color. Drag “Total_Value” to Size. Change the Marks to Circle.<br />
 <img src="Images/10.png" /></p></li>
-<li><p>Apply filter and pages. Drag “Country_T” to Filter, choose all of the countries, then left click =&gt; Show Filter.<br />
-<img src="Images/11.png" /></p></li>
 </ol>
+<p>Right click on “Country_T” =&gt; “Sort”, change the setting as descending in order of “Total_Value”.<br />
+<img src="Images/15.png" /></p>
+<ol start="5" type="1">
+<li>Apply filter and pages. Right click on “Country_T” =&gt; Sort, manually adjust the order of countries as shown in the Color panel above as the same, therefore, in the control panel of Filter, the trade volume of each country can be sorted according to its size: <img src="Images/16.png" /></li>
+</ol>
+<p>Then,drag “Country_T” to Filter, choose all of the countries, then left click =&gt; Show Filter.<br />
+<img src="Images/11.png" /></p>
 <p>Drag “Year (Total)” to Pages, the panel shown below:<br />
 <img src="Images/12.png" /></p>
 <ol start="6" type="1">
@@ -1603,7 +1608,11 @@ Right click on each axis =&gt; Format.<br />
 In the Pane interface, Numbers =&gt; Currency (Custom) =&gt; Billions (B), only keep one decimal places.<br />
 <img src="Images/13.png" /></p></li>
 <li><p>Turn on Animations Format =&gt; Animations, open the animations. Set the Duration to smooth speed, 1 seconds (Slow). <img src="Images/14.png" /></p></li>
-<li><p>Add title Add title: Changes of Merchandise Trade Volume with Singapore,2011-2020</p></li>
+<li><p>Create Calculated Field Create new column named Trade Balance, compare export and import value, and if export &gt; import, means Singapore has a trade surplus with the country, if import &gt; export, means Singapore has a trade deficit with the country. <img src="Images/17.png" /></p></li>
+</ol>
+<p>9.Justify Tool tip Drag “Trade Balance” to Tool tip, then justify as shown below: <img src="Images/18.png" /></p>
+<ol start="8" type="1">
+<li>Add title Add title: Changes of Merchandise Trade Volume with Singapore,2011-2020</li>
 </ol>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
