@@ -122,14 +122,14 @@ In the Pane interface, Numbers => Currency (Custom) => Billions (B), only keep o
 ![](Images/13.png)
 
 7. Turn on Animations
-Format => Animations, open the animations. Set the Duration to smooth speed, 1 seconds (Slow).
+Format => Animations, open the animations. Set the Duration to smooth speed, 1 seconds (Slow).  
 ![](Images/14.png)
 
 8. Create New Calculated Field
 1)Create new column named Trade Balance, compare export and import value, and if export > import, means Singapore has a trade surplus with the country, if import > export, means Singapore has a trade deficit with the country.
 ![](Images/17.png)
 
-2)Create new column named Difference,it's the value of export minus the value of import
+2)Create new column named Difference, it it the value of export minus import.
 ![](Images/19.png)
 
 9.Justify Tool tip
@@ -147,7 +147,7 @@ Drag "Country_T" to Label
 12. Add Commentary
 From 2011 to 2014, Singapore's largest trading partner was Malaysia, and after 2014, mainland China became the largest trading partner.
 
-**For Dashboard**
+**For Dashboard**  
 1. Add Tittle
 Add tittle: Changes of Merchandise Trade Volume with Singapore,2011-2020.
 
