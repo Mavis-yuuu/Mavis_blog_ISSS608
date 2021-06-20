@@ -1,7 +1,7 @@
 ---
 title: "DataViz Makeover 2"
 description: |
-  A short description of the post.
+  Analyze the changes of 82 regions' merchandise trade volume with Singapore from 2011 to 2020.
 author:
   - name: Yu Yaxin
     url: {}
@@ -21,13 +21,13 @@ knitr::opts_chunk$set(echo = FALSE)
 
 # 1. The original visualization
 ![](Images/1.png)
-The data comes from the [Singapore Statistic](https://www.singstat.gov.sg/find-data/search-by-theme/trade-and-investment/merchandise-trade/latest-data), which records the monthly volume of imports and exports of Singapore by varies of regions/markets from January 1976 to April 2021. And this report is going to visualize the merchandise trade changes between different countries with Singapore during 2011 to 2020.
+The data comes from the [Singapore Statistic](https://www.singstat.gov.sg/find-data/search-by-theme/trade-and-investment/merchandise-trade/latest-data), which records the monthly volume of imports and exports of Singapore by varies of regions/markets from January 1976 to April 2021. And this report is going to visualize the merchandise trade changes between different regions with Singapore during 2011 to 2020.
 
-# 2.Comments on the clarity and aesthetics.
+# 2. Comments on the clarity and aesthetics.
 ## 2.1 Clarity
 No.|                  Critiques                       |Suggestion
 ---|--------------------------------------------------|-----------------------
-1  |**The solid circles showed transaction volume of different regions covered each other.** Such as EU, more than half of the dark blue one has covered by United States, the turquoise circle. The same thing happened in Republic of Korea, which was almost entirely covered by Japan. This leads to an incomplete representation of the trade volume information in the diagram, readers cannot compare the size of transactions in different regions.|We can filter different countries in Tableau in order to choosing either individual countries or all of those.
+1  |**The solid circles showed transaction volume of different regions covered each other.** Such as EU, more than half of the dark blue one has covered by United States, the turquoise circle. The same thing happened in Republic of Korea, which was almost entirely covered by Japan. This leads to an incomplete representation of the trade volume information in the diagram, readers cannot compare the size of transactions in different regions.|We can filter different regions in Tableau in order to choosing either individual regions or all of those.
 2  |**The content of commentary and chart are inconsistent. **Commentary should be based on the charts that have been made. The original chart did not show any information about changes of dates (years), but commentary mentions two specific years which is 2006 and 2009, are not supported by chart data. |Commentary is written based on the content of Graph to supplement interesting observations of details in Graph, so we can focus on main observations.
 3  |**lack of indicating which time periods are used in the chart. **The original Visualization did not specify the period of time for the merchandise trade being studied, and also lacked clear notations. Therefore, it will cause misunderstanding for readers. |Change the form to interactive visualization, highlights the time change by turning the time into a reader-selectable option.
 4  |**Missing graph title. **The original graph did not set an appropriate title to summarize the main content, so is short of highlighting the point that intended to express. | Add appropriate graph title.
@@ -42,13 +42,16 @@ No.|                 Aesthetics                       |Suggestion
 
 # 3. Sketch Design
 ## 3.1 Sketch
+![](Images/30.jpg)
+
 ## 3.2 Advantages
+
 1)Added timeline options.
-The static Bubble Plot has been turned into an interactive mode. Reader can drag the time option to observe the changes in the amount of trade between Singapore and different countries at different times,which can help Reader to choose the time more accurately.
+The static Bubble Plot has been turned into an interactive mode. Reader can drag the time option to observe the changes in the amount of trade between Singapore and different regions at different times,which can help Reader to choose the time more accurately.
 
 2)Add appropriate titles and commentary to make the directivity and content of plot clearer.
 
-3)Add a filter option to allow users to freely select the country to view.
+3)Add a filter option to allow users to freely select the region to view.
 
 4)Reduce the use of the same color range of background, the overall chart looks clean and tidy.
 
@@ -61,7 +64,7 @@ First to clean the redundant worksheet “Content” and delete needless content
 **For Import Dataset**
 
 1. Clean Data
-In order to observe the data better and not be affected by the maximum value, we need to delete the continent representing the collection of countries such as Europe, Asia, Africa and America, and finally keep the 82 countries are both shown in Export and Import dataset. Meanwhile, it was found that the value of "Germany, Democratic Republic Of" and "Yemen Democratic" from 2011 to 2020 were zero, so they were deleted also. The new dataset was shown below:
+In order to observe the data better and not be affected by the maximum value, we need to delete the continent representing the collection of regions such as Europe, Asia, Africa and America, and finally keep the 82 regions are both shown in Export and Import dataset. Meanwhile, it was found that the value of "Germany, Democratic Republic Of" and "Yemen Democratic" from 2011 to 2020 were zero, so they were deleted also. The new dataset was shown below:
 ![](Images/2.png)
 
 2. Sum each year and transpose data
@@ -72,7 +75,7 @@ In Export Worksheet, add up the monthly data from 2011 to 2020 according to diff
 3. Repeat the same 2 steps  
 
 4. Add new worksheet “Total”  
-Add the Import and Export values for each country correspondingly in a new worksheet named "Total". The formula is:
+Add the Import and Export values for each region correspondingly in a new worksheet named "Total". The formula is:
 ![](Images/4.png)
 
 Then the data preparation steps in Excel is all done, save this file as “Data Final”.
@@ -85,9 +88,9 @@ Import the Excel “Data” into Tableau
 First pivot each dataset, select the data from 2011 to 2020, right click => Pivot, and rename the Import new pivot columns as follow:  
 ![](Images/5.png)
 
-And also change the Export as “Country_Ex” and “Export_Value” respectively, the columns in Total as “Country_T” and “Total_Value”.  
+And also change the Export as “Region_Ex” and “Export_Value” respectively, the columns in Total as “Region_T” and “Total_Value”.  
 
-Then connect three datasets by same columns - Country and Year.
+Then connect three datasets by same columns - Region and Year.
 ![](Images/6.png)
 
 ![](Images/7.png)
@@ -101,19 +104,19 @@ Drag “Export_Value” and “Import_Value” to Columns and Rows respectively.
 ![](Images/9.png)
 
 4. Set size and color
-Drag “Country_T” to Color.
+Drag “Region_T” to Color.
 Drag “Total_Value” to Size.
 Change the Marks to Circle.  
 ![](Images/10.png)  
 
-Right click on “Country_T” => “Sort”, change the setting as descending in order of "Total_Value".  
+Right click on “Region_T” => “Sort”, change the setting as descending in order of "Total_Value".  
 ![](Images/15.png) 
 
 5. Apply filter and pages.
-Right click on “Country_T” => Sort, manually adjust the order of countries as shown in the Color panel above as the same, therefore, in the control panel of Filter, the trade volume of each country can be sorted according to its size:  
+Right click on “Region_T” => Sort, manually adjust the order of regions as shown in the Color panel above as the same, therefore, in the control panel of Filter, the trade volume of each region can be sorted according to its size:  
 ![](Images/16.png) 
 
-Then,drag “Country_T” to Filter, choose all of the countries, then left click => Show Filter.  
+Then,drag “Region_T” to Filter, choose all of the regions, then left click => Show Filter.  
 ![](Images/11.png)  
 
 Drag “Year (Total)” to Pages, the panel shown below:  
@@ -129,7 +132,7 @@ Format => Animations, open the animations. Set the Duration to smooth speed, 1 s
 ![](Images/14.png)
 
 8. Create New Calculated Field
-1)Create new column named Trade Balance, compare export and import value, and if export > import, means Singapore has a trade surplus with the country, if import > export, means Singapore has a trade deficit with the country.
+1)Create new column named Trade Balance, compare export and import value, and if export > import, means Singapore has a trade surplus with the region, if import > export, means Singapore has a trade deficit with the region.
 ![](Images/17.png)
 
 2)Create new column named Difference, it it the value of export minus import.
@@ -144,7 +147,7 @@ Then change the format of "Difference" to the same as other numbers.
 10. Add a Reference Line on the diagonal
 
 11. Add Labels
-Drag "Country_T" to Label
+Drag "region_T" to Label
 
 **For Dashboard**  
 1. Add Tittle    
@@ -167,9 +170,24 @@ Hong Kong is the top net exporter, United States is the top net importer in 2011
 
 # 5.Final Visualization
 The final dashboard:
-![](Images/21.png)
+![](Images/22.png)
 
 # 6. Main Observation
+### 6.1 Since 2013, China has surpassed Malaysia to become Singapore's largest trading partner.
+In 2011, the total amount of merchandise trade between Singapore and China was 101.7B dollars, and Malaysia was 113.3B dollars, which is already very close. In 2012, the amount of merchandise trade between Singapore and China has increased slightly.Until 2013, China grew rapidly to become Singapore's largest exporter and importer.Since 2013, the total volume of trade between Singapore and China has far exceeded that of any other region, and Singapore has been running a trade surplus with China, that is, exports exceed imports.  
+
+Furthermore, in 2020, the total amount of trade with the United States will be 102.4B dollars, only 1B dollars less than Malaysia's 103.5B dollars, possibly due to the impact of the COVID-19, the trade with Malaysia has decreased slightly year by year.
+
+### 6.2 In 2017, the top net importer changed from United States to Taiwan, Hong Kong has been the top net exporter.
+Singapore ran a trade deficit with the United States from 2011 to 2017.From 2011 to 2014, the difference between exports and imports remained at about 20B dollars, until 2015, when the difference gradually moved closer to a positive value, meaning more of Singapore's own goods were exported to the US.
+
+### 6.3 Singapore runs a trade surplus for most of the top 10 regions by volume.
+Over the past decade, the top 10 regions with which Singapore traded were China, Malaysia, the United States, Indonesia, Hong Kong, South Korea, Thailand and India.
+In 2011, Singapore achieved the same ratio of trade surplus and trade deficit, each accounting for 50%. This situation lasted until 2017, when it achieved a trade surplus with India of 5.2B dollars. By 2018, it gradually realized more exports than imports to Malaysia and South Korea, and by 2020, except Taiwan and Japan,
+Singapore ran surpluses with the rest.
+It can be seen that Singapore's overall trade situation is in surplus in recent years.
+
+
 
 
 
