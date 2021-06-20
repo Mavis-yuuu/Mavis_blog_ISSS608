@@ -95,6 +95,8 @@ Then connect three datasets by same columns - Region and Year.
 
 ![](Images/7.png)
 
+**For Sheet 1**
+
 2. Change the data type
 Change all the Year data type from “String” to “Date”
 ![](Images/8.png)
@@ -147,9 +149,47 @@ Then change the format of "Difference" to the same as other numbers.
 10. Add a Reference Line on the diagonal
 
 11. Add Labels
-Drag "region_T" to Label
+Drag "Region_T" to Label
+
+**For Sheet 2**  
+1. Create line chart
+Drag "Year", "Import_Value" and "Export_Value" to Columns and Rows respectively.  
+![](Images/23.png)
+
+2. Apply Color, Tooltip, Filter and Label.
+Drag "Measure Names" to Color and Label
+Drag "Region_T" and "Difference" to Tooltip
+Drag "Year" to Filter
+![](Images/24.png)
+
+3. Adjust the line chart
+Change all the axes format to the same as Sheet 1, right click on synchronize axis, then change the rows name to "Import" and "Export" respectively.
+
+4. Add tittle
+Add tittle:Changes in the volume of imports and exports, 2011-2020
+
+5. Change the Tooltip
+![](Images/25.png)
+
+**For Sheet 3**
+1.Create the bar chart
+Drag "Total_Value" and "Region_Im" to Columns and Rows respectively.  
+![](Images/26.png)
+
+2.Apply Filter and and Pages
+Drag "Region_Im" to Filter
+Drag "Year" to "Pages"
+![](Images/27.png)
+
+3.Show Labels
+Left click on Label => show mark labels
+
+4.Add tittle
+Add tittle: Changes in total volume  in top ten regions, 2011-2020
 
 **For Dashboard**  
+Join the three sheets into one dashboard first.
+
 1. Add Tittle    
 Add tittle: Changes of Merchandise Trade Volume with Singapore,2011-2020.
 
@@ -163,10 +203,11 @@ Set the Size to "Automatic".
 2011 - 2014, Singapore's largest trading partner was Malaysia, after 2014,
 mainland China became the largest trading partner.
 
-5.Add Annotation    
+5. Add Annotation    
 Hong Kong is the top net exporter, United States is the top net importer in 2011-2017, then change to Taiwan.
 
-6. Add data source and notes in the bottom of graph.
+6. Add notes
+Add notes in the bottom of the graph: The size of the circle represents the total volume of merchandise trade; Region names in right control  is in descending order according to the total volume size.
 
 # 5.Final Visualization
 The final dashboard:
