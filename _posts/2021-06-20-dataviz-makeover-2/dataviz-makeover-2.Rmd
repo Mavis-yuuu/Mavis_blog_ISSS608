@@ -138,23 +138,33 @@ Drag “Trade Balance” and "Difference" to Tool tip, then justify as shown bel
 
 Then change the format of "Difference" to the same as other numbers.
 
-10. Add Drop Lines
-Right click on circles => Drop Lines => Show Drop Lines
+10. Add a Reference Line on the diagonal
 
 11. Add Labels
 Drag "Country_T" to Label
 
 **For Dashboard**  
-1. Add Tittle  
+1. Add Tittle    
 Add tittle: Changes of Merchandise Trade Volume with Singapore,2011-2020.
 
-2. Adjust the Legend
-Delete the Sum_Total panel
+2. Adjust the Legend  
+Delete the Sum_Total panel and the Color panel
 
-3. Change the size
+3. Change the size  
 Set the Size to "Automatic".
 
-4. Add Commentary  
+4. Add Commentary    
 2011 - 2014, Singapore's largest trading partner was Malaysia, after 2014,
 mainland China became the largest trading partner.
+
+5.Add Annotation    
+Hong Kong is the top net exporter, United States is the top net importer in 2011-2017, then change to Taiwan.
+
+6. Add data source and notes in the bottom of graph.
+
+#Final Visualization
+
+
+
+
 
