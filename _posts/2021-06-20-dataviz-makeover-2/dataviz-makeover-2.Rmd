@@ -66,7 +66,7 @@ In Export Worksheet, add up the monthly data from 2011 to 2020 according to diff
 ![](Images/3.png)
 
 **For Export dataset**   
-3.Repeat the same 2 steps  
+3. Repeat the same 2 steps  
 
 4. Add new worksheet “Total”  
 Add the Import and Export values for each country correspondingly in a new worksheet named "Total". The formula is:
@@ -74,4 +74,44 @@ Add the Import and Export values for each country correspondingly in a new works
 
 Then the data preparation steps in Excel is all done, save this file as “Data Final”.
 
+### 4.2 Data Visualization Steps  
+
+Import the Excel “Data” into Tableau
+
+1. Pivot and connect three datasets
+First pivot each dataset, select the data from 2011 to 2020, right click => Pivot, and rename the Import new pivot columns as follow:  
+![](Images/5.png)
+
+And also change the Export as “Country_Ex” and “Export_Value” respectively, the columns in Total as “Country_T” and “Total_Value”.  
+
+Then connect three datasets by same columns - Country and Year.
+![](Images/6.png)
+
+![](Images/7.png)
+
+2. Change the data type
+Change all the Year data type from “String” to “Date”
+![](Images/8.png)
+
+3. Create bubble plot
+Drag “Export_Value” and “Import_Value” to Columns and Rows respectively.  
+![](Images/9.png)
+
+4. Set size and color
+Drag “Country_T” to Color.
+Drag “Total_Value” to Size.
+Change the Marks to Circle.  
+![](Images/10.png)  
+
+5. Apply filter and pages.
+Drag “Country_T” to Filter, choose all of the countries, then left click => Show Filter.  
+![](Images/11.png)  
+
+Drag “Year (Total)” to Pages, the panel shown below:  
+![](Images/12.png)
+
+6. Format horizontal and vertical axes   
+Right click on each axis => Format.   
+In the Pane interface, Numbers => Currency (Custom) => Billions (B), only keep one decimal places.  
+![](Images/13.png)
 
