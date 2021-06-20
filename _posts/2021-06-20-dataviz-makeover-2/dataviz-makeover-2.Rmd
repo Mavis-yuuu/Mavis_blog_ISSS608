@@ -165,7 +165,14 @@ Hong Kong is the top net exporter, United States is the top net importer in 2011
 
 6. Add data source and notes in the bottom of graph.
 
-#Final Visualization
+# 5.Final Visualization
+The final dashboard:
+![](Images/21.png)
+
+# 6. Main Observation
+
+
+
 
 
 
