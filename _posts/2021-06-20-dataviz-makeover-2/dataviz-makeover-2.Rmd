@@ -21,7 +21,7 @@ knitr::opts_chunk$set(echo = FALSE)
 The data comes from the [Singapore Statistic](https://www.singstat.gov.sg/find-data/search-by-theme/trade-and-investment/merchandise-trade/latest-data), which records the monthly volume of imports and exports of Singapore by varies of regions/markets from January 1976 to April 2021. And this report is going to visualize the merchandise trade changes between different countries with Singapore during 2011 to 2020.
 
 # 2.Comments on the clarity and aesthetics.
-### 2.1 Clarity
+## 2.1 Clarity
 No.|                  Critiques                       |Suggestion
 ---|--------------------------------------------------|-----------------------
 1  |**The solid circles showed transaction volume of different regions covered each other.** Such as EU, more than half of the dark blue one has covered by United States, the turquoise circle. The same thing happened in Republic of Korea, which was almost entirely covered by Japan. This leads to an incomplete representation of the trade volume information in the diagram, readers cannot compare the size of transactions in different regions.|We can filter different countries in Tableau in order to choosing either individual countries or all of those.
@@ -29,7 +29,7 @@ No.|                  Critiques                       |Suggestion
 3  |**lack of indicating which time periods are used in the chart. **The original Visualization did not specify the period of time for the merchandise trade being studied, and also lacked clear notations. Therefore, it will cause misunderstanding for readers. |Change the form to interactive visualization, highlights the time change by turning the time into a reader-selectable option.
 4  |**Missing graph title. **The original graph did not set an appropriate title to summarize the main content, so is short of highlighting the point that intended to express. | Add appropriate graph title.
 
-### 2.2 Aesthetics
+## 2.2 Aesthetics
 No.|                 Aesthetics                       |Suggestion
 ---|--------------------------------------------------|-----------------------
 1  |**The choice of background color is not appropriate. **There are already varies of colors and labels of regions in the graph, and the light blue and green background colors that represent Net Import and Net Export belong to the same color range with some regions’ circles, hard for readers to clearly distinguish and makes the whole graph messy. |Do not set another background color. Keep the transparent color.
@@ -38,8 +38,8 @@ No.|                 Aesthetics                       |Suggestion
 4  |**Inappropriate location for axis title.**Crossing titles on the horizontal and vertical axes in the lower left corner can be misleading, since Exports is more like vertical title, while Imports are closer to the horizontal axis. The locations need to be changed. |Place the names of the axes halfway between the horizontal and vertical axes.
 
 # 3. Sketch Design
-### 3.1 Sketch
-### 3.2 Advantages
+## 3.1 Sketch
+## 3.2 Advantages
 1)Added timeline options.
 The static Bubble Plot has been turned into an interactive mode. Reader can drag the time option to observe the changes in the amount of trade between Singapore and different countries at different times,which can help Reader to choose the time more accurately.
 
@@ -50,7 +50,7 @@ The static Bubble Plot has been turned into an interactive mode. Reader can drag
 4)Reduce the use of the same color range of background, the overall chart looks clean and tidy.
 
 # 4. Data Visualization
-### 4.1 Data Preparation Process
+## 4.1 Data Preparation Process
 There are 3 worksheets in the original file, “T1” means the merchandise imports in Singapore by different region/market, “T2” means the merchandise exports in Singapore by different region/market, monthly during 1976 Jan to 2021 April, including 121 rows in total.
 
 First to clean the redundant worksheet “Content” and delete needless content in T1 and T2 datasets, renamed as “Import” and “Export” respectively.
@@ -74,7 +74,7 @@ Add the Import and Export values for each country correspondingly in a new works
 
 Then the data preparation steps in Excel is all done, save this file as “Data Final”.
 
-### 4.2 Data Visualization Steps  
+## 4.2 Data Visualization Steps  
 
 Import the Excel “Data” into Tableau
 
@@ -115,3 +115,9 @@ Right click on each axis => Format.
 In the Pane interface, Numbers => Currency (Custom) => Billions (B), only keep one decimal places.  
 ![](Images/13.png)
 
+7. Turn on Animations
+Format => Animations, open the animations. Set the Duration to smooth speed, 1 seconds (Slow).
+![](Images/14.png)
+
+8. Add title
+Add title: Changes of Merchandise Trade Volume with Singapore,2011-2020
