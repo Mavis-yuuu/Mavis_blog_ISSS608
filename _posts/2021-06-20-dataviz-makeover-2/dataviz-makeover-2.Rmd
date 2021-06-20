@@ -36,3 +36,42 @@ No.|                 Aesthetics                       |Suggestion
 2  |**Static bubble plot may not be the most appropriate visualization method.**Because the raw data include the imports and exports volume changes through years between different regions and Singapore, the original chart does not capture this dynamic demand well. |Add Animation funtion in Tableau.
 3  |**Note's position is not impressive enough. **The font of notes is too small for the reader to recognize below the graph, and the position is also not so obvious. |Change the Note in front of the graph or change the color and font of it.
 4  |**Inappropriate location for axis title.**Crossing titles on the horizontal and vertical axes in the lower left corner can be misleading, since Exports is more like vertical title, while Imports are closer to the horizontal axis. The locations need to be changed. |Place the names of the axes halfway between the horizontal and vertical axes.
+
+# 3. Sketch Design
+### 3.1 Sketch
+### 3.2 Advantages
+1)Added timeline options.
+The static Bubble Plot has been turned into an interactive mode. Reader can drag the time option to observe the changes in the amount of trade between Singapore and different countries at different times,which can help Reader to choose the time more accurately.
+
+2)Add appropriate titles and commentary to make the directivity and content of plot clearer.
+
+3)Add a filter option to allow users to freely select the country to view.
+
+4)Reduce the use of the same color range of background, the overall chart looks clean and tidy.
+
+# 4. Data Visualization
+### 4.1 Data Preparation Process
+There are 3 worksheets in the original file, “T1” means the merchandise imports in Singapore by different region/market, “T2” means the merchandise exports in Singapore by different region/market, monthly during 1976 Jan to 2021 April, including 121 rows in total.
+
+First to clean the redundant worksheet “Content” and delete needless content in T1 and T2 datasets, renamed as “Import” and “Export” respectively.
+
+**For Import Dataset**
+
+1. Clean Data
+In order to observe the data better and not be affected by the maximum value, we need to delete the continent representing the collection of countries such as Europe, Asia, Africa and America, and finally keep the 82 countries are both shown in Export and Import dataset. Meanwhile, it was found that the value of "Germany, Democratic Republic Of" and "Yemen Democratic" from 2011 to 2020 were zero, so they were deleted also. The new dataset was shown below:
+![](Images/2.png)
+
+2. Sum each year and transpose data
+In Export Worksheet, add up the monthly data from 2011 to 2020 according to different years, then copy => Transpose. The result:
+![](Images/3.png)
+
+**For Export dataset**   
+3.Repeat the same 2 steps  
+
+4. Add new worksheet “Total”  
+Add the Import and Export values for each country correspondingly in a new worksheet named "Total". The formula is:
+![](Images/4.png)
+
+Then the data preparation steps in Excel is all done, save this file as “Data Final”.
+
+
