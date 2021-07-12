@@ -1,0 +1,41 @@
+---
+title: "Assignment - Mini Challenge 2"
+description: |
+  A short description of the post.
+author:
+  - name: Yu Yaxin
+    url: {}
+date: 07-12-2021
+output:
+  distill::distill_article:
+    self_contained: false
+    toc: true
+    toc_depth: 2
+    number_sections: true
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# 1.Overview
+## 1.1 Background
+This report is based on the mini challenge 2 from [VAST Challenge 2021](https://vast-challenge.github.io/2021/). Here is the background: 
+
+GAStech, an oil-products company from Tethys, is expanding into Kronos - an island country, built good relations with the local government as well.Not only GAStech got considerable profit, but also has an impact on the local natural environment.
+At the beginning of 1997,the residents of Elodis agricultural town located near the capital of Kronos began to pay attention to an abnormal increase in the occurrence of illnesses such as cancer, birth defects,respiratory illnesses, and logical diseases, in addition to a marked decrease in crop yield. And they believe this is related to Gastech's business. 
+
+After fail to seeking help from the government, the residents set up their own POK (Protectors of Kronos) organization to protect the ecological environment in Kronos and prevent continuous deterioration.Now the POK has taken on a certain scale.  
+
+During Gastech's celebration party in 2014, the unexplained disappearance of some employees was suspected to be related to the POK organization. Due to this,the purpose of this report is to analyze the consumption behaviors of employees at different times and places, use R Studio to visualize the data, screen the existing suspicious behaviors, match the employees with varies of crads, and draw suggestions and conclusions.
+
+## 1.2 Data
+MC2 includes 4 CSV format files and a tourist map of Abila with locations of interest identified.  
+* car-assignments: includes 45 detailed records of vehicle assignments by employees.  
+* cc_data: contains 1491 credit and debit card transaction records in various of locations.  
+* loyalty_data: 1393 observations of loyalty card transaction of GAStech's employees.  
+* gps: records the latitude and longitude number by employees.
+
+# 2. Data preperation
+
