@@ -16,7 +16,7 @@ output:
 
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## 1.Overview
@@ -30,10 +30,10 @@ After fail to seeking help from the government, the residents set up their own P
 
 During Gastech's celebration party in 2014, the unexplained disappearance of some employees was suspected to be related to the POK organization. Due to this,the purpose of this report is to analyze the consumption behaviors of employees at different times and places, use R Studio to visualize the data, screen the existing suspicious behaviors, match the employees with varies of crads, and draw suggestions and conclusions.
 
-### 1.2 Dataset introduction
+### 1.2 Dataset introduced
 MC2 includes 4 CSV format files and a tourist map of Abila with locations of interest identified.  
 -- Car-assignments: includes 45 detailed records of vehicle assignments by employees.  
--- Cc_data: contains 1491 credit and debit card transaction records in various of locations.  
+-- Cc_data: contains 1491 credit and debit card transaction amount records in various of locations.  
 -- Loyalty_data: 1393 observations of loyalty card transaction of GAStech's employees.  
 -- Gps: records the latitude and longitude number by employees.
 
@@ -41,14 +41,10 @@ MC2 includes 4 CSV format files and a tourist map of Abila with locations of int
 ### 2.1 Import data
 **(i) Install R packages**
 ```{r}
-packages = c('ggiraph', 'plotly', 
-             'DT', 'patchwork',
-             'tidyverse','visNetwork',
-             'clock','lubridate',
-             'raster', 'sf', 
-             'tmap', 'clock',
-             'igraph','tidygraph',
-             'magrittr')
+packages = c('ggiraph', 'plotly', 'DT', 'patchwork',
+             'tidyverse','visNetwork','clock','lubridate',
+             'raster', 'sf','tmap', 'clock',
+             'igraph','tidygraph','magrittr')
 for (p in packages){
   if(!require(p, character.only = T)){
     install.packages(p)
@@ -57,4 +53,19 @@ for (p in packages){
 }
 ```
 
-### 2.2
+**(ii) Files importing**
+```{R}
+Loyalty <- read.csv("D:/Study/Visual Analytics/Assignment/MC2/loyalty_data.csv")
+CC <- read.csv("D:/Study/Visual Analytics/Assignment/MC2/cc_data.csv")
+GPS <- read.csv("D:/Study/Visual Analytics/Assignment/MC2/gps.csv")
+CarTrack <- read.csv("D:/Study/Visual Analytics/Assignment/MC2/car-assignments.csv")
+```
+
+```{r}
+glimpse(Loyalty)
+glimpse(CC)
+glimpse(GPS)
+glimpse(CarTrack)
+```
+
+### 2.2 Clean and tidy data
