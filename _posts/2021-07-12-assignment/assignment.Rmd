@@ -24,11 +24,9 @@ knitr::opts_chunk$set(echo = TRUE)
 This report is based on the mini challenge 2 from [VAST Challenge 2021](https://vast-challenge.github.io/2021/). Here is the background: 
 
 GAStech, an oil-products company from Tethys, is expanding into Kronos - an island country, built good relations with the local government as well.Not only GAStech got considerable profit, but also has an impact on the local natural environment.
-At the beginning of 1997,the residents of Elodis agricultural town located near the capital of Kronos began to pay attention to an abnormal increase in the occurrence of illnesses such as cancer, birth defects,respiratory illnesses, and logical diseases, in addition to a marked decrease in crop yield. And they believe this is related to Gastech's business. 
+At the beginning of 1997,the residents of Elodis agricultural town located near the capital of Kronos began to pay attention to an abnormal increase in the occurrence of illnesses such as cancer and birth defects.And they believe this is related to Gastech's business. The residents set up their own POK (Protectors of Kronos) organization to protect the ecological environment in Kronos and prevent continuous deterioration.
 
-After fail to seeking help from the government, the residents set up their own POK (Protectors of Kronos) organization to protect the ecological environment in Kronos and prevent continuous deterioration. Now the POK has taken on a certain scale.  
-
-During Gastech's celebration party in 2014, the unexplained disappearance of some employees was suspected to be related to the POK organization. Due to this,the purpose of this report is to analyze the consumption behaviors of employees at different times and places, use R Studio to visualize the data, screen the existing suspicious behaviors, match the employees with varies of crads, and draw suggestions and conclusions.
+During Gastech's celebration party in 2014, the unexplained disappearance of some employees was suspected to be related to the POK organization. And now we got the employees' credit card and loyalty card transaction data, and also their GPS record, to identify anomalies. Due to this, the purpose of this report is to analyze the consumption behaviors of employees at different times and places, use R Studio to visualize the data, screen the existing suspicious behaviors, match the employees with varies of crads, and draw suggestions and conclusions.
 
 ### 1.2 literature review
 R Studio was originally developed by Robert Gentleman and Ross Ihaka, an integrated development environment (IDE) for the R language. It is a standalone open source project that integrates many powerful programming tools into an intuitive, easy-to-learn interface. This visualizing analysis is based on R Studio, therefore, will introduce some of the R packages. 
@@ -57,7 +55,7 @@ MC2 includes 4 CSV format files and a tourist map of Abila with locations of int
 packages = c('ggiraph', 'plotly', 'DT', 'patchwork',
              'tidyverse','visNetwork','clock','lubridate',
              'raster', 'sf','tmap', 'clock',
-             'igraph','tidygraph','magrittr')
+             'igraph','tidygraph','magrittr',"hms")
 for (p in packages){
   if(!require(p, character.only = T)){
     install.packages(p)
@@ -88,14 +86,17 @@ which(rowSums(is.na(LoyaltyCard))==TRUE)
 which(rowSums(is.na(CC))==TRUE)
 which(rowSums(is.na(GPS))==TRUE)
 which(rowSums(is.na(CarTrack))==TRUE)
+na.omit(CarTrack)
 ```
 
 **(ii)Change data type**
 ```{r}
-CC$timestamp <- date_time_parse(as.character(CC$timestamp),
-                zone = "",
-                format = "%m/%d/%Y %H:%M")
-CC$day <- as.factor(get_day(CC$timestamp))
+CC1 <- CC %>% 
+separate(col = timestamp, into = c("date", "time"), sep = "\\ ")
+
+CC1$date <- as.Date(CC1$date, "%m/%d/%Y")
+CC1$day <- as.factor(get_day(CC1$date))
+head(CC1)
 ```
 
 ```{r}
@@ -112,19 +113,23 @@ CarTrack <- CarTrack %>%
   select(CarID,CurrentEmploymentTitle,CurrentEmploymentType,Name)
 ```
 
-## 3 Data visualization
-### 3.1 Build interactive table
+## 3 Find anomalies 
+### 3.1 Identify the most popular locations
 ```{r}
-CC_Group <- CC %>%
-group_by(location,last4ccnum) %>% 
-summarise(sum(price))
-CC_Group %>%
-  count(location,sort = TRUE)
+LoyaltyCard_3 <- LoyaltyCard %>% 
+  select(location,day) %>% 
+  group_by(location,day) %>%  
+  summarize(Count=n())
 
-DT::datatable(CC_Group, filter = 'top') %>% 
-  formatRound(columns = c('location','last4ccnum','sum(price)'),
-                           digits = 2) %>%
-  formatStyle(0, 
-              target = 'row', 
-              lineHeight='25%')
+library(tidyr)
+library(reshape2)
+LoyaltyCard_wide <- spread(LoyaltyCard_3,day,Count)
+
+
 ```
+
+### 3.2 Visualization
+**(i)Find the anomalies**
+```{r}
+```
+
