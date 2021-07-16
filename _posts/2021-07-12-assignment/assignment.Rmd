@@ -115,18 +115,30 @@ CarTrack <- CarTrack %>%
 
 ## 3 Find anomalies 
 ### 3.1 Identify the most popular locations
+**(i) For loyalty card transactions**
 ```{r}
 LoyaltyCard_3 <- LoyaltyCard %>% 
   select(location,day) %>% 
   group_by(location,day) %>%  
   summarize(Count=n())
 
-library(tidyr)
-library(reshape2)
-LoyaltyCard_wide <- spread(LoyaltyCard_3,day,Count)
+fig <- plot_ly(data=LoyaltyCard_3,
+    x = ~day, 
+    y = ~location,
+    z = ~Count,
+    text = ~paste("Day", day,     
+                  "<br>Count", Count),
+    type = "heatmap"
+) %>%
+layout(title ='Most popular location of loyalty card transaction')
+fig
+```
 
+```{r}
 
 ```
+
+**(ii) For credit card transactions**
 
 ### 3.2 Visualization
 **(i)Find the anomalies**
