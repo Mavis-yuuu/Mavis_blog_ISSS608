@@ -51,11 +51,15 @@ MC2 includes 4 CSV format files and a tourist map of Abila with locations of int
 ## 2. Data preperation
 ### 2.1 Import data
 **(i) Install R packages**
+The first step is to install all the packages we will use in a follow-up study. Here will give brief introduction of some packages.  
+
+We use **Tidyverse** to manipulate and clean original dataset, includes ggplot2(wich is mainly for data visualization), dplyr, tidyr, and purrr. **GGiraph** is to make ggplot interactive with users. **Plotly**'s R graphing library makes interactive, publication-quality graphs.The goal of **patchwork** package is to make it ridiculously simple to combine separate ggplots into the same graphic. **visNetwork** is an R package for network visualization. **lubridate** can help to make up for R Studio's lack of processing time data and makes it much easier. The aim of **magrittr** is to decrease development time and improve readability and maintainability of code. With the **tmap** package, thematic maps can be generated with great flexibility. The **raster** package provides classes and functions to manipulate geographic data in ’raster’ format. **igraph** is a collection of libraries for creating and manipulating graphs and analyzing networks.
+
 ```{r}
 packages = c('ggiraph', 'plotly', 'DT', 'patchwork',
              'tidyverse','visNetwork','clock','lubridate',
-             'raster', 'sf','tmap', 'clock',
-             'igraph','tidygraph','magrittr',"hms")
+             'raster', 'sf','tmap','rgdal',
+             'igraph','tidygraph','magrittr')
 for (p in packages){
   if(!require(p, character.only = T)){
     install.packages(p)
@@ -65,6 +69,8 @@ for (p in packages){
 ```
 
 **(ii) Files importing**
+Import the four datasets.
+
 ```{R}
 LoyaltyCard <- read.csv("D:/Study/Visual Analytics/Assignment/MC2/loyalty_data.csv")
 CC <- read.csv("D:/Study/Visual Analytics/Assignment/MC2/cc_data.csv")
@@ -89,14 +95,13 @@ which(rowSums(is.na(CarTrack))==TRUE)
 na.omit(CarTrack)
 ```
 
-**(ii)Change data type**
+**(ii)Adjust data type and format**
 ```{r}
-CC1 <- CC %>% 
-separate(col = timestamp, into = c("date", "time"), sep = "\\ ")
-
-CC1$date <- as.Date(CC1$date, "%m/%d/%Y")
-CC1$day <- as.factor(get_day(CC1$date))
-head(CC1)
+CC$timestamp <- date_time_parse(as.character(CC$timestamp),
+                zone = "",
+                format = "%m/%d/%Y %H:%M")
+CC$hour <- as.numeric(get_hour(CC$timestamp))
+a <- as.character(CC$timestamp)
 ```
 
 ```{r}
@@ -121,7 +126,9 @@ LoyaltyCard_3 <- LoyaltyCard %>%
   select(location,day) %>% 
   group_by(location,day) %>%  
   summarize(Count=n())
+```
 
+```{r}
 fig <- plot_ly(data=LoyaltyCard_3,
     x = ~day, 
     y = ~location,
@@ -130,18 +137,108 @@ fig <- plot_ly(data=LoyaltyCard_3,
                   "<br>Count", Count),
     type = "heatmap"
 ) %>%
-layout(title ='Most popular location of loyalty card transaction')
+layout(title ='Most popular location of loyalty card transaction by day')
 fig
 ```
 
 ```{r}
+Bar <- plot_ly(data=LoyaltyCard_3,
+  x = ~Count,
+  y = ~location,
+  type = "bar"
+) %>%
+  layout(title ='Total number of loyalty card transactions')
 
+Bar
 ```
+
 
 **(ii) For credit card transactions**
+```{r}
+CC_4 <- CC %>%
+  select(location,hour) %>% 
+  group_by(location,hour) %>%  
+  summarize(Count=n())
+```
+
+```{r}
+Heatmap <- plot_ly(data=CC_4,
+                   x= ~hour,
+                   y= ~location,
+                   z= ~Count,
+                   text = ~paste("hour",hour,
+                                 "<br>Count",Count),
+                   type = "heatmap") %>%
+  layout(tittle = 'Most popular location of credit card transaction by hour')
+Heatmap
+
+```
+
+```{r}
+Bar2 <- plot_ly(data=CC_4,
+  x = ~Count,
+  y = ~location,
+  type = "bar"
+) %>%
+  layout(title ='Total number of credit card transactions')
+
+Bar2
+
+```
 
 ### 3.2 Visualization
-**(i)Find the anomalies**
-```{r}
+```{R}
+bgmap <- raster("D:/Study/Visual Analytics/Mavis-yuuu/Mavis_blog_ISSS608/_posts/2021-07-12-assignment/MC2-tourist.jpg")
+bgmap
+tm_shape(bgmap) +
+tm_rgb(bgmap, r = 1,g = 2,b = 3,
+       alpha = NA,
+       saturation = 1,
+       interpolate = TRUE,
+       max.value = 255)
+
+Abila_st <- st_read(dsn = "./Geospatial",
+                    layer = "Abila")
+gps <- read_csv("D:/Study/Visual Analytics/Assignment/MC2/gps.csv")
+glimpse(gps)
+
+gps$Timestamp <- date_time_parse(gps$Timestamp,
+                zone = "",
+                format = "%m/%d/%Y %H:%M:%S")
+gps$day <- as.factor(get_day(gps$Timestamp))
+gps_sf <- st_as_sf(gps, 
+                   coords = c("long", "lat"),
+                       crs= 4326)
+gps_sf
+
+gps_path <- gps_sf %>%
+  group_by(id, day) %>%
+  summarize(m = mean(Timestamp), 
+            do_union=FALSE) %>%
+  st_cast("LINESTRING")
+gps_path
+
+gps_path_selected <- gps_path %>%
+  filter(id==1)
+tmap_mode("view")
+tm_shape(bgmap) +
+  tm_rgb(bgmap, r = 1,g = 2,b = 3,
+       alpha = NA,
+       saturation = 1,
+       interpolate = TRUE,
+       max.value = 255) +
+  tm_shape(gps_path_selected) +
+  tm_lines()
+
+m <- tm_shape(bgmap) +
+  tm_rgb(bgmap, r = 1,g = 2,b = 3,
+       alpha = NA,
+       saturation = 1,
+       interpolate = TRUE,
+       max.value = 255) +
+  tm_shape(gps_path) +
+  tm_lines() +
+  tm_facets(along = "id")
 ```
+**(i)Find the anomalies**
 
