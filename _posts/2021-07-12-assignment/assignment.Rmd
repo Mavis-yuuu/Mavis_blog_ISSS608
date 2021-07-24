@@ -59,7 +59,7 @@ We use **Tidyverse** to manipulate and clean original dataset, includes ggplot2(
 ```{r}
 packages = c('ggiraph', 'plotly', 'DT', 'patchwork',
              'tidyverse','visNetwork','clock','lubridate',
-             'raster', 'sf','tmap','rgdal',
+             'raster', 'sf','tmap','rgdal',"dplyr",
              'igraph','tidygraph','magrittr')
 for (p in packages){
   if(!require(p, character.only = T)){
@@ -87,9 +87,11 @@ glimpse(CC)
 glimpse(GPS)
 glimpse(CarTrack)
 ```
+We can find some columns' data types are incorrect, we will change it by following steps.
 
 ### 2.2 Clean and tidy data
-**(i)Missing values checking**  
+**(i)Missing values checking** 
+
 The first thing to do is to check whether there is missing value, here we use is.na fuction.
 
 ```{r}
@@ -106,23 +108,29 @@ If the result gets 0, means the inexistence of missing. We can draw from the con
 
 From our previous brief glimpse of the data, the data type of "timestamp" column is incorrect. It should be in "date" format but is mistaken for "character" format, so here we use date_time_parse to modify it, and also extracts the hours and days as new columns in "CC" and "LoyaltyCard" respectively.
 
-For CC dataset:
+For **CC** dataset:
 
 ```{r}
 CC$timestamp <- date_time_parse(as.character(CC$timestamp),
                 zone = "",
                 format = "%m/%d/%Y %H:%M")
-CC$hour <- as.numeric(get_hour(CC$timestamp))
+CC$weekday = wday(CC$timestamp, 
+                  label = TRUE, 
+                  abbr = FALSE)
+CC$hour <- as.numeric(get_hour(CC$timestamp)) #extract hour as new column
 a <- as.character(CC$timestamp)
 ```
 
-For LoyaltyCard dataset:
+For **LoyaltyCard** dataset:
 
 ```{r}
 LoyaltyCard$timestamp <- date_time_parse(as.character(LoyaltyCard$timestamp),
                 zone = "",
                 format = "%m/%d/%Y")
-LoyaltyCard$day <- as.factor(get_day(LoyaltyCard$timestamp))
+LoyaltyCard$Weekday = wday(LoyaltyCard$timestamp, 
+                             label = TRUE, 
+                             abbr = FALSE)
+LoyaltyCard$day <- as.factor(get_day(LoyaltyCard$timestamp)) #extract day as new column
 ```
 
 **(iii)Derive new column**
@@ -138,41 +146,71 @@ CarTrack <- CarTrack %>%
 ## 3 Find anomalies 
 ### 3.1 Identify the most popular locations
 **(i) For loyalty card transactions**
+
+Create new dataset named "LoyaltyCard_3", use group_by function to count the number of occurrences at each location during this period. We will use this dataset for further visualization.
+
 ```{r}
 LoyaltyCard_3 <- LoyaltyCard %>% 
-  select(location,day) %>% 
-  group_by(location,day) %>%  
-  summarize(Count=n())
+  select(location) %>%
+  group_by(location) %>% 
+  summarize(weight =n()) %>%
+  arrange(desc(weight))
+
+glimpse(LoyaltyCard_3)
 ```
+
+First to visualize the total loyalty card transaction number within 14 days in each locations of Kronos.
+
 ```{r}
 Bar <- plot_ly(data=LoyaltyCard_3,
-  x = ~Count,
+  x = ~weight,
   y = ~location,
-  type = "bar"
-) %>%
-  layout(title ='Total number of loyalty card transactions')
+  type = "bar",
+  text = ~paste("location:", location,
+                "<br>Number of times:", weight),
+  marker = list(color = 'rgb(158,202,225)',
+           line = list(color = 'rgb(8,48,107)', width = 1.5))) %>%
+  layout(xaxis = list(title = 'Number of times'),
+         yaxis = list(title = "",
+                      categoryorder = "array",
+                      categoryarray = ~weight),
+    title ='Total number of loyalty card transactions')
 
 Bar
+ 
 ```
+
+We can find the most three popular places among employees who are using loyalty card to buy from GASTech company are cafe shop and restaurant, Katerina's Cafe, Guy's Gyros and hippokampos, it seems that they are in the habit of drinking coffee on a regular basis, and it may be speculated that they are in the habit of meeting customers in a cafe or having a conversation to relax.
+
+Then we group the data by day in order to showing the changes in each day and name it as LoyaltyCard4.
+
+```{r}
+LoyaltyCard_4 <- LoyaltyCard %>% 
+  select(location,Weekday) %>%  
+  group_by(Weekday,location) %>%  
+  summarize(Count=n())
+
+glimpse(LoyaltyCard_4)
+```
+
+Plotly is a very useful package to make interactive, publication-quality graphs with the reader. Will use plotly to make interactive bar chart, which can select different day in the control panel.
 
 ```{r}
 
-LoyaltyCard_3$day <- as.numeric(LoyaltyCard_3$day)
-LoyaltyCard_3$location <- as.factor(LoyaltyCard_3$location)
-
-BAR2 <-  plot_ly(data=LoyaltyCard_3,
+BAR3 <-  plot_ly(data=LoyaltyCard_4,
     x = ~Count, 
     y = ~location, 
     color = ~location, 
-    frame = ~day, 
-    text = ~paste("Day:", day,     
+    frame = ~Weekday, 
+    text = ~paste("Day:", Weekday,     
                   "<br>Count:", Count,
-                  "<br>location:",location), 
+                  "<br>location:",location),
     hoverinfo = "text",
     type = 'bar',
     mode = 'markers'
   )
-BAR2 <- BAR2 %>% layout(
+BAR3 <- BAR3 %>% 
+  layout(
     xaxis = list(
       type = "log"
     )
@@ -180,31 +218,59 @@ BAR2 <- BAR2 %>% layout(
 layout(title ='Most popular location of loyalty card transaction by day')
 
 
-BAR2
+BAR3
 ```
 
+From the graph we can use the control panel to see
+
+
 **(ii) For credit card transactions**
+First to create new dataset which incoludes location, hour and the number of visits GASTech employees have made to these locations, named CC_4.
 
 ```{r}
 CC_4 <- CC %>%
   select(location,hour) %>% 
-  group_by(location,hour) %>%  
-  summarize(Count=n())
+  group_by(location) %>%  
+  summarize(Count=n()) %>%
+  arrange(desc(Count))
 ```
+
+Create the basic bar chart for initial visualization.
+
 ```{r}
-Bar2 <- plot_ly(data=CC_4,
+Bar4 <- plot_ly(data=CC_4,
   x = ~Count,
   y = ~location,
-  type = "bar"
-) %>%
+  type = "bar",
+  text = ~paste("location:", location,
+                "<br>Number of times:", Count),
+  marker = list(color = 'rgb(158,202,225)',
+           line = list(color = 'rgb(8,48,107)', width = 1.5))) %>%
+  layout(xaxis = list(title = 'Number of times'),
+         yaxis = list(title = 'location',
+                      categoryorder = "array",
+                      categoryarray = ~Count)) %>%
   layout(title ='Total number of credit card transactions')
 
-Bar2
+Bar4
 
 ```
 
+We can see the same conclusion from using loyalty card. The most popular places for employees to go are cafes and eating places. And then we create heatmap to see the changes of each hour.
+
 ```{r}
-Heatmap <- plot_ly(data=CC_4,
+CC_5 <- CC %>% 
+  select(location,hour) %>%  
+  group_by(location,hour) %>%  
+  summarize(Count=n())
+
+glimpse(LoyaltyCard_4)
+```
+
+Here we use heatmap to do visualization.
+
+```{r}
+Heatmap <- plot_ly(data=CC_5,
                    x= ~hour,
                    y= ~location,
                    z= ~Count,
@@ -218,8 +284,23 @@ Heatmap
 
 ```
 
+GASTech employees present a tracked pattern throughout the day. At 7-8 am in the morning, Brew've been served is the most popular place and also the Hallowed Grounds. Then they will go to work until 12 am to 13 am, chose to have lunch. At 8 p.m in the evening, maybe it is the time they leave work, go to cafes and restaurants to relax and eating.
+
+* The first unusual thing is there are 5 credit card purchases records at 3 am in Kronos mart. 
+* Eight o 'clock in the evening is the peak time for employees to go to cafes and restaurants, which means
+  they can leave work only after that time, having overtime problems. 
+* Between 3 p.m. and 6 p.m., which is the working time, Albert's Fine Clothing appeared five times in the
+  credit card consumption record. That is to say, there may be some employees who use their working time to
+  go shopping.
+* Between 12pm and 2pm, a total of 55 credit card purchases were made at Ouzeri Elian, which is likely to be
+  a pub, so there is speculation that some staff may have been involved in drinking on duty.
+* A total of five purchases were made in the Chotus Hotel between 12:00 and 1:00 p.m., and only one hour was spent in the Hotel before leaving, which is also a bit strange, but more specific research is needed.
 
 ### 3.2 Visualization
+**(i) Visualize the route for each ID **
+
+First to import the map file and create the initial map.
+
 ```{R}
 bgmap <- raster("D:/Study/Visual Analytics/Mavis-yuuu/Mavis_blog_ISSS608/_posts/2021-07-12-assignment/MC2-tourist.tif")
 bgmap
@@ -231,6 +312,8 @@ tm_rgb(bgmap, r = 1,g = 2,b = 3,
        max.value = 255)
 ```
 
+Then add the gps data into the map.
+
 ```{r}
 Abila_st <- st_read(dsn = "./Geospatial",
                     layer = "Abila")
@@ -240,16 +323,19 @@ glimpse(gps)
 gps$Timestamp <- date_time_parse(gps$Timestamp,
                 zone = "",
                 format = "%m/%d/%Y %H:%M:%S")
-gps$day <- as.factor(get_day(gps$Timestamp))
+gps$weekday = wday(gps$Timestamp, 
+                  label = TRUE, 
+                  abbr = FALSE)
 gps_sf <- st_as_sf(gps, 
                    coords = c("long", "lat"),
                        crs= 4326)
 gps_sf
 ```
 
+
 ```{r}
 gps_path <- gps_sf %>%
-  group_by(id, day) %>%
+  group_by(id, weekday) %>%
   summarize(m = mean(Timestamp), 
             do_union=FALSE) %>%
   st_cast("LINESTRING")
@@ -259,7 +345,8 @@ gps_path
 ```{r}
 gps_path_selected <- gps_path %>%
   filter(id==1)
-tmap_mode("view")
+tmap_mode("plot")
+
 tm_shape(bgmap) +
   tm_rgb(bgmap, r = 1,g = 2,b = 3,
        alpha = NA,
@@ -267,20 +354,24 @@ tm_shape(bgmap) +
        interpolate = TRUE,
        max.value = 255) +
   tm_shape(gps_path_selected) +
-  tm_lines()
+  tm_facets(by = "weekday") +
+  tm_lines(col = "darkred")
 ```
+
+
+**(i) Match the cards**
 
 ```{r}
-m <- tm_shape(bgmap) +
-  tm_rgb(bgmap, r = 1,g = 2,b = 3,
-       alpha = NA,
-       saturation = 1,
-       interpolate = TRUE,
-       max.value = 255) +
-  tm_shape(gps_path) +
-  tm_lines() +
-  tm_facets(along = "id")
+CC1 <- CC %>%
+separate(col = timestamp, into = c("date", "time"), sep = "\\ ")
+class(CC1$date)
+
+LoyaltyCard2 <- LoyaltyCard %>%
+rename(date = timestamp)
+LoyaltyCard2$date <- as.character(LoyaltyCard2$date)
+class(LoyaltyCard2$date)
+
+Combine <- inner_join(CC1,LoyaltyCard2,by = c("price","location","date")) %>%
+  select(last4ccnum,loyaltynum,price,location,date) %>%
+distinct(last4ccnum,loyaltynum, .keep_all = TRUE)
 ```
-
-**(i)Find the anomalies**
-
