@@ -58,7 +58,7 @@ We use **Tidyverse** to manipulate and clean original dataset, includes ggplot2(
 ```{r}
 packages = c('ggiraph', 'plotly', 'DT', 'patchwork',
              'tidyverse','visNetwork','clock','lubridate',
-             'raster', 'sf','tmap','rgdal',"dplyr",
+             'raster', 'sf','tmap','rgdal',"dplyr",'ggraph',
              'igraph','tidygraph','magrittr')
 for (p in packages){
   if(!require(p, character.only = T)){
@@ -364,7 +364,7 @@ tm_shape(bgmap) +
 
 ```{r}
 gps_path_selected <- gps_path %>%
-filter(id == "21")
+filter(id == "28")
 
 tmap_mode("view")
 tm_shape(bgmap) +
@@ -379,42 +379,51 @@ tm_shape(bgmap) +
   tm_lines(col = "weekday", lwd = 7)
 ```
 #### 3.2.1.1 Identify unusual behaviors
-(i) Some of employees may have the problem of drunk driving and drunk working, such as Nils Calixto for Car ID 1, Ingrid Barranco for Car ID 4 and so on.  
+**1**.Some of employees may have the problem of drunk driving and drunk working, such as Nils Calixto for Car ID 1, Ingrid Barranco for Car ID 4 and so on.  
+For example, we can first analyze two employees, see from the path pictures. On Friday and Thursday for ID1 and Wednesday and Thursday for ID4, these two persons went to Ouzeri Elian many times, so we could assume he was driving under the influence. Due to time data limitations, we can only speculate that he may have been drinking on duty, since he needed to work on those two days.  
 
-For example, we can first analyze two employees, see from the path pictures. On Friday and Thursday for ID1 and Wednesday and Thursday for ID4, these two persons went to Ouzeri Elian many times, so we could assume he was driving under the influence. Due to time data limitations, we can only speculate that he may have been drinking on duty, since he needed to work on those two days.
 ![](Images/1.png)
 ![](Images/2.png)
 
-(ii) Car ID 3 visits Alberts Fine Clothing almost every day
-
+**2**. Car ID 3 visits Alberts Fine Clothing almost every day
 If we carefully observe Felix Balas's road map, who is an engineer, we can find his paths almost meet at the clothing store every day. Therefore, we can conclude that he visits the clothing store very frequently. One possibility is that he has the need to buy clothes, and the other possibility is that he has other problems.
+
 ![](Images/3.png)
 
-(iii) The employee with Car ID 9 drives the long distance from the company to shop at Bean There Done That almost every day.
+**3**. The employee with Car ID 9 drives the long distance from the company to shop at Bean There Done That almost every day.
+
 ![](Images/4.png)   
 Gustav Cazar, who is an drill technician, his paths during weekday are very similar. Almost every day, he chose to drive to the coffee shop far away from the GASTech company, but rarely choose the coffee shop close to the company and more employees choose, which is a bit strange.
 
-(iv) Car ID 21, 22 and 34 all went to the museum on Saturday.
+**4**.Car ID 21, 22 and 34 all went to the museum on Saturday.
 All three were from the security services, so it's not ruled out that they made an appointment to visit the museum together on Saturday.  
+
 ![](Images/5.png)  
 ![](Images/6.png)
 ![](Images/7.png)
 
-(v) Isia Vann with car ID 16 will go to Frydos Autosupply n More everyday.
+**5**. Isia Vann with car ID 16 will go to Frydos Autosupply n More everyday.
 ![](Images/8.png)
 Whether on weekends or during the week, this employee would choose to drive to the place.
 
-(vi) 
+**6**. Car ID7 and ID33 went to CHOSTUS Hotel at the same weekday on Tuesday, and they came from the same department, engineering and the same current employment title.
+![](Images/9.png)
+![](Images/10.png)
+According to their first name, Elsa is a female name, and ID33 named Brand is a male name. and also according to the above information, we can suspect that they have an improper relationship.
 
+**7**.Car ID28 has a very strange path.
+![](Images/11.png)
 
+The path visualization of Kare Orilla is very shaky, so it is possible that she is driving under the influence of alcohol or is not skilled in driving without a driver's license.
 
+**8**.There may be instances where an employee drives a business truck for personal use.
 
-
-
-
-
+![](Images/12.png)
+In addition to the 35 car ID has been recorded, there are GPS data of several other ids, so it is assumed that these data are from business trucks. However, it is found that an employee drove a commercial truck to a cafe shop, it is suspected that there is a private use of the truck.
 
 ### 3.2.2 Match the cards
+
+First to match two datasets (LoyaltyCard2 & CC1) by common columns: price,location and date.
 
 ```{r}
 CC1 <- CC %>%
@@ -429,9 +438,11 @@ Combine <- inner_join(CC1,LoyaltyCard2,by = c("price","location","date")) %>%
 distinct(last4ccnum,loyaltynum, .keep_all = TRUE)
 ```
 
+Then calculate the time difference between each gps records, we assume if the stop time longer than five minutes, he's going to make his purchases right here.
+
 ```{r}
 gps_time <- gps %>%
-  select(id,Timestamp,lat,long) %>%
+  select(id,Timestamp,lat,long,weekday) %>%
   filter(id <= 35)
 gps_time <- gps_time[order(gps_time$id, gps_time$Timestamp),]
 gps_time$tgap <- unlist(tapply(gps_time$Timestamp, INDEX = gps_time$id,
@@ -441,6 +452,8 @@ gps_time_total <- gps_time %>%
   filter(tgap >= 5)
 ```
 
+Next, we visualize the time gap data in each location.
+
 ```{r}
 gps_time_total_sf <- st_as_sf(gps_time_total, 
                    coords = c("long", "lat"),
@@ -449,12 +462,14 @@ gps_time_total_sf <- st_as_sf(gps_time_total,
 
 ```{r}
 gps_time_total_path <- gps_time_total_sf %>%
-  group_by(id) %>%
+  group_by(id, weekday) %>%
   summarize(m = mean(Timestamp), 
             do_union=FALSE) %>%
   st_cast("LINESTRING")
 gps_time_total_path
 ```
+
+Each point means that the Employee chooses to consume at that place.
 
 ```{r}
 tmap_mode("view")
@@ -464,10 +479,11 @@ tm_shape(bgmap) +
        saturation = 1,
        interpolate = TRUE,
        max.value = 255) +
-  tm_shape(gps_path_selected) +
+  tm_shape(gps_time_total_path) +
   tm_facets(by = "id", ncol = 1) +
   tm_layout(legend.show=FALSE) +
-  tm_dots(col = "darkred",size = 0.9)
+  tm_dots(col = "darkred",size = 0.7)
 ```
 
-### 3.2.3 Find Relationship
+Finally, we can retrieve the previous credit card data according to this location and identify which card belongs to which employee.
+
