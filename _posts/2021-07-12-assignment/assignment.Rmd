@@ -91,14 +91,13 @@ We can find some columns' data types are incorrect, we will change it by followi
 ## 2.2 Clean and tidy data
 ### 2.2.1 Missing values checking
 
-The first thing to do is to check whether there is missing value, here we use is.na fuction.
+The first thing to do is to check whether there is missing value, and we find CarTrack dataset has missing value just on car ID, it is useful for us to see if there is private use of the bus problem, so do not delete.
 
 ```{r}
 which(rowSums(is.na(LoyaltyCard))==TRUE)
 which(rowSums(is.na(CC))==TRUE)
 which(rowSums(is.na(GPS))==TRUE)
 which(rowSums(is.na(CarTrack))==TRUE)
-na.omit(CarTrack)
 ```
 
 If the result gets 0, means the inexistence of missing. We can draw from the conclusion that three of the datasets do not have any missing except CarTrack. If we go back to check this dataset, we will find that the missing values are all the IDs of drivers whose in Gastech company, which are not very useful for our subsequent research, so we can choose to delete them by using na.omit function.
@@ -142,6 +141,14 @@ CarTrack <- CarTrack %>%
   select(CarID,CurrentEmploymentTitle,CurrentEmploymentType,Name)
 ```
 
+### 2.2.4 Rename some text data
+
+Because one of the location name is in Greek format, we need to change it into English, and also delete all the single quotes, it may cause misleading for following code.
+
+```{r}
+LoyaltyCard$location <- gsub("'", '', LoyaltyCard$location)
+LoyaltyCard$location[LoyaltyCard$location=="Katerina’s Café"]<-"Katerina Cafe"
+```
 
 # 3 Find anomalies 
 ## 3.1 Identify the most popular locations
@@ -340,8 +347,7 @@ Visualize the gps data by each id.
 
 ```{r}
 gps_path_selected <- gps_path %>%
-arrange(desc(id)) %>%
-filter(id <= 35)
+arrange(desc(id))
 
 tmap_mode("view")
 tm_shape(bgmap) +
@@ -355,6 +361,58 @@ tm_shape(bgmap) +
   tm_layout(legend.show=FALSE) +
   tm_lines(col = "weekday", lwd = 7)
 ```
+
+```{r}
+gps_path_selected <- gps_path %>%
+filter(id == "21")
+
+tmap_mode("view")
+tm_shape(bgmap) +
+  tm_rgb(bgmap, r = 1,g = 2,b = 3,
+       alpha = NA,
+       saturation = 1,
+       interpolate = TRUE,
+       max.value = 255) +
+  tm_shape(gps_path_selected) +
+  tm_facets(by = "weekday",ncol = 1) +
+  tm_layout(legend.show=FALSE) +
+  tm_lines(col = "weekday", lwd = 7)
+```
+#### 3.2.1.1 Identify unusual behaviors
+(i) Some of employees may have the problem of drunk driving and drunk working, such as Nils Calixto for Car ID 1, Ingrid Barranco for Car ID 4 and so on.  
+
+For example, we can first analyze two employees, see from the path pictures. On Friday and Thursday for ID1 and Wednesday and Thursday for ID4, these two persons went to Ouzeri Elian many times, so we could assume he was driving under the influence. Due to time data limitations, we can only speculate that he may have been drinking on duty, since he needed to work on those two days.
+![](Images/1.png)
+![](Images/2.png)
+
+(ii) Car ID 3 visits Alberts Fine Clothing almost every day
+
+If we carefully observe Felix Balas's road map, who is an engineer, we can find his paths almost meet at the clothing store every day. Therefore, we can conclude that he visits the clothing store very frequently. One possibility is that he has the need to buy clothes, and the other possibility is that he has other problems.
+![](Images/3.png)
+
+(iii) The employee with Car ID 9 drives the long distance from the company to shop at Bean There Done That almost every day.
+![](Images/4.png)   
+Gustav Cazar, who is an drill technician, his paths during weekday are very similar. Almost every day, he chose to drive to the coffee shop far away from the GASTech company, but rarely choose the coffee shop close to the company and more employees choose, which is a bit strange.
+
+(iv) Car ID 21, 22 and 34 all went to the museum on Saturday.
+All three were from the security services, so it's not ruled out that they made an appointment to visit the museum together on Saturday.  
+![](Images/5.png)  
+![](Images/6.png)
+![](Images/7.png)
+
+(v) Isia Vann with car ID 16 will go to Frydos Autosupply n More everyday.
+![](Images/8.png)
+Whether on weekends or during the week, this employee would choose to drive to the place.
+
+(vi) 
+
+
+
+
+
+
+
+
 
 ### 3.2.2 Match the cards
 
