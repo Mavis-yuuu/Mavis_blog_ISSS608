@@ -1,7 +1,8 @@
 ---
 title: "Assignment - Mini Challenge 2"
 description: |
-  A short description of the post.
+  This report is based on the mini challenge 2 from VAST Challenge 2021.
+  
 author:
   - name: Yu Yaxin
     url: {}
@@ -326,6 +327,8 @@ gps$Timestamp <- date_time_parse(gps$Timestamp,
 gps$weekday = wday(gps$Timestamp, 
                   label = TRUE, 
                   abbr = FALSE)
+gps$id <- as_factor(gps$id)
+
 gps_sf <- st_as_sf(gps, 
                    coords = c("long", "lat"),
                        crs= 4326)
@@ -343,7 +346,7 @@ gps_path <- gps_sf %>%
 gps_path
 ```
 
-Visualize the gps data by each id.
+Visualize the paths by each id.
 
 ```{r}
 gps_path_selected <- gps_path %>%
@@ -362,6 +365,8 @@ tm_shape(bgmap) +
   tm_lines(col = "weekday", lwd = 7)
 ```
 
+And also we can use this code to show detailed tracks on weekday by one employee.
+
 ```{r}
 gps_path_selected <- gps_path %>%
 filter(id == "28")
@@ -378,6 +383,7 @@ tm_shape(bgmap) +
   tm_layout(legend.show=FALSE) +
   tm_lines(col = "weekday", lwd = 7)
 ```
+
 #### 3.2.1.1 Identify unusual behaviors
 **1**.Some of employees may have the problem of drunk driving and drunk working, such as Nils Calixto for Car ID 1, Ingrid Barranco for Car ID 4 and so on.  
 For example, we can first analyze two employees, see from the path pictures. On Friday and Thursday for ID1 and Wednesday and Thursday for ID4, these two persons went to Ouzeri Elian many times, so we could assume he was driving under the influence. Due to time data limitations, we can only speculate that he may have been drinking on duty, since he needed to work on those two days.  
@@ -441,32 +447,43 @@ distinct(last4ccnum,loyaltynum, .keep_all = TRUE)
 Then calculate the time difference between each gps records, we assume if the stop time longer than five minutes, he's going to make his purchases right here.
 
 ```{r}
-gps_time <- gps %>%
-  select(id,Timestamp,lat,long,weekday) %>%
-  filter(id <= 35)
+gps_time <- gps
 gps_time <- gps_time[order(gps_time$id, gps_time$Timestamp),]
 gps_time$tgap <- unlist(tapply(gps_time$Timestamp, INDEX = gps_time$id,
                           FUN = function(x) c(0, `units<-`(diff(x), "mins"))))
 
-gps_time_total <- gps_time %>% 
-  filter(tgap >= 5)
+gps_time_select <- gps_time %>%
+  arrange(desc(id)) %>%
+  filter(tgap >= 5) 
+  
 ```
 
 Next, we visualize the time gap data in each location.
 
 ```{r}
-gps_time_total_sf <- st_as_sf(gps_time_total, 
+bgmap <- raster("D:/Study/Visual Analytics/Mavis-yuuu/Mavis_blog_ISSS608/_posts/2021-07-12-assignment/MC2-tourist.tif")
+bgmap
+tm_shape(bgmap) +
+tm_rgb(bgmap, r = 1,g = 2,b = 3,
+       alpha = NA,
+       saturation = 1,
+       interpolate = TRUE,
+       max.value = 255)
+```
+
+
+```{r}
+gps_time_sf <- st_as_sf(gps_time_select, 
                    coords = c("long", "lat"),
                        crs= 4326)
 ```
 
 ```{r}
-gps_time_total_path <- gps_time_total_sf %>%
-  group_by(id, weekday) %>%
+gps_time_path <- gps_time_sf %>%
+  group_by(id,weekday) %>%
   summarize(m = mean(Timestamp), 
             do_union=FALSE) %>%
   st_cast("LINESTRING")
-gps_time_total_path
 ```
 
 Each point means that the Employee chooses to consume at that place.
@@ -479,11 +496,22 @@ tm_shape(bgmap) +
        saturation = 1,
        interpolate = TRUE,
        max.value = 255) +
-  tm_shape(gps_time_total_path) +
-  tm_facets(by = "id", ncol = 1) +
+  tm_shape(gps_time_path) +
+  tm_facets(by = "id",ncol = 1) +
   tm_layout(legend.show=FALSE) +
-  tm_dots(col = "darkred",size = 0.7)
+  tm_dots(col = "weekday", size = 1.7)
+
 ```
 
-Finally, we can retrieve the previous credit card data according to this location and identify which card belongs to which employee.
+Finally, we can retrieve the previous credit card data according to this location and identify which card belongs to which employee. Visualize the original credit card dataset by using DT data table.
+
+```{r}
+CC_6 <- CC %>%
+  select(timestamp,last4ccnum,location)
+DT::datatable(CC_6) %>% 
+  formatStyle(0, 
+              target = 'row', 
+              lineHeight='25%')
+```
+
 
