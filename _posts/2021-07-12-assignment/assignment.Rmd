@@ -60,7 +60,7 @@ We use **Tidyverse** to manipulate and clean original dataset, includes ggplot2(
 packages = c('ggiraph', 'plotly', 'DT', 'patchwork',
              'tidyverse','visNetwork','clock','lubridate',
              'raster', 'sf','tmap','rgdal',"dplyr",'ggraph',
-             'igraph','tidygraph','magrittr')
+             'igraph','tidygraph','magrittr','networkD3','ggalluvial')
 for (p in packages){
   if(!require(p, character.only = T)){
     install.packages(p)
@@ -429,22 +429,7 @@ In addition to the 35 car ID has been recorded, there are GPS data of several ot
 
 ### 3.2.2 Match the cards
 
-First to match two datasets (LoyaltyCard2 & CC1) by common columns: price,location and date.
-
-```{r}
-CC1 <- CC %>%
-separate(col = timestamp, into = c("date", "time"), sep = "\\ ")
-
-LoyaltyCard2 <- LoyaltyCard %>%
-rename(date = timestamp)
-LoyaltyCard2$date <- as.character(LoyaltyCard2$date)
-
-Combine <- inner_join(CC1,LoyaltyCard2,by = c("price","location","date")) %>%
-  select(last4ccnum,loyaltynum,price,location,date) %>%
-distinct(last4ccnum,loyaltynum, .keep_all = TRUE)
-```
-
-Then calculate the time difference between each gps records, we assume if the stop time longer than five minutes, he's going to make his purchases right here.
+First to calculate the time difference between each gps records, we assume if the stop time longer than five minutes, he's going to make his purchases right here.
 
 ```{r}
 gps_time <- gps
@@ -503,15 +488,43 @@ tm_shape(bgmap) +
 
 ```
 
-Finally, we can retrieve the previous credit card data according to this location and identify which card belongs to which employee. Visualize the original credit card dataset by using DT data table.
+Finally, we can retrieve the previous credit card data according to this location and identify which card belongs to which employee. Visualize the original credit card dataset by using DT data table. We can filter the data by different weekday.
 
 ```{r}
 CC_6 <- CC %>%
-  select(timestamp,last4ccnum,location)
+  select(timestamp,last4ccnum,location,weekday)
 DT::datatable(CC_6) %>% 
   formatStyle(0, 
               target = 'row', 
               lineHeight='25%')
 ```
 
+As for car ID1, according to the route map we made, he was in Abila Zacharo on Monday, Wednesday in Ouzeri Elian and Hallowed Grounds on Thursday, who spent more than five minutes in these locations, so we assume he did some shopping in those places. 
+
+We then look back at our CC_6 data set and filter out the card numbers that went to those places on those weedays. If we know the credit card number already,
+
+Finally we match two datasets (LoyaltyCard2 & CC1) by common columns: price,location and date. If the two cards have the same price expend, there is a high probability that two cards with the same price were paid by one person at the same time, due to this we can combine two dataset to match the loyalty card and credit cards.
+
+```{r}
+CC1 <- CC %>%
+separate(col = timestamp, into = c("date", "time"), sep = "\\ ")
+
+LoyaltyCard2 <- LoyaltyCard %>%
+rename(date = timestamp)
+LoyaltyCard2$date <- as.character(LoyaltyCard2$date)
+
+Combine <- inner_join(CC1,LoyaltyCard2,by = c("price","location","date")) %>%
+  select(last4ccnum,loyaltynum) %>%
+distinct(last4ccnum,loyaltynum, .keep_all = TRUE)
+```
+
+We use the DT datatable to show the correspondence between the two types of cards.
+```{r}
+DT::datatable(Combine) %>% 
+  formatStyle(0, 
+              target = 'row', 
+              lineHeight='25%')
+```
+
+As we can see from the datatable, most of the two types of cards are in one-to-one correspondence, but there are still existing an inequality. The credit card with last four numbers of 8332, corresponding to two loyalty cards, L2070 and L8566. And also the loyalty card number L3288 corresponding to two credit cards, 1286 and 9241.So guess there may be a credit card and loyalty card borrowed or lost problem.
 
