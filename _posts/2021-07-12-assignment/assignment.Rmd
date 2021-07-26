@@ -297,8 +297,7 @@ GASTech employees present a tracked pattern throughout the day. At 7-8 am in the
 * Between 12pm and 2pm, a total of 55 credit card purchases were made at Ouzeri Elian, which is likely to be a pub, so there is speculation that some staff may have been involved in drinking on duty.
 * A total of five purchases were made in the Chotus Hotel between 12:00 and 1:00 p.m., and only one hour was spent in the Hotel before leaving, which is also a bit strange, but more specific research is needed.
 
-## 3.2 Data Visualization
-### 3.2.1 Visualize the route for each ID
+## 3.2 Visualize the route for each ID
 
 First to import the map file and create the initial map.
 
@@ -384,8 +383,8 @@ tm_shape(bgmap) +
   tm_lines(col = "weekday", lwd = 7)
 ```
 
-#### 3.2.1.1 Identify unusual behaviors
-**1**.Some of employees may have the problem of drunk driving and drunk working, such as Nils Calixto for Car ID 1, Ingrid Barranco for Car ID 4 and so on.  
+### 3.2.1 Identify unusual behaviors
+**1**. Some of employees may have the problem of drunk driving and drunk working, such as Nils Calixto for Car ID 1, Ingrid Barranco for Car ID 4 and so on.  
 For example, we can first analyze two employees, see from the path pictures. On Friday and Thursday for ID1 and Wednesday and Thursday for ID4, these two persons went to Ouzeri Elian many times, so we could assume he was driving under the influence. Due to time data limitations, we can only speculate that he may have been drinking on duty, since he needed to work on those two days.  
 
 ![](Images/1.png)
@@ -401,7 +400,7 @@ If we carefully observe Felix Balas's road map, who is an engineer, we can find 
 ![](Images/4.png)   
 Gustav Cazar, who is an drill technician, his paths during weekday are very similar. Almost every day, he chose to drive to the coffee shop far away from the GASTech company, but rarely choose the coffee shop close to the company and more employees choose, which is a bit strange.
 
-**4**.Car ID 21, 22 and 34 all went to the museum on Saturday.
+**4**. Car ID 21, 22 and 34 all went to the museum on Saturday.
 All three were from the security services, so it's not ruled out that they made an appointment to visit the museum together on Saturday.  
 
 ![](Images/5.png)  
@@ -417,17 +416,17 @@ Whether on weekends or during the week, this employee would choose to drive to t
 ![](Images/10.png)
 According to their first name, Elsa is a female name, and ID33 named Brand is a male name. and also according to the above information, we can suspect that they have an improper relationship.
 
-**7**.Car ID28 has a very strange path.
+**7**. Car ID28 has a very strange path.
 ![](Images/11.png)
 
 The path visualization of Kare Orilla is very shaky, so it is possible that she is driving under the influence of alcohol or is not skilled in driving without a driver's license.
 
-**8**.There may be instances where an employee drives a business truck for personal use.
+**8**. There may be instances where an employee drives a business truck for personal use.
 
 ![](Images/12.png)
 In addition to the 35 car ID has been recorded, there are GPS data of several other ids, so it is assumed that these data are from business trucks. However, it is found that an employee drove a commercial truck to a cafe shop, it is suspected that there is a private use of the truck.
 
-### 3.2.2 Match the cards
+## 3.3 Match the cards
 
 First to calculate the time difference between each gps records, we assume if the stop time longer than five minutes, he's going to make his purchases right here.
 
@@ -482,9 +481,9 @@ tm_shape(bgmap) +
        interpolate = TRUE,
        max.value = 255) +
   tm_shape(gps_time_path) +
-  tm_facets(by = "id",ncol = 1) +
+  tm_facets(by = "id",ncol = 2) +
   tm_layout(legend.show=FALSE) +
-  tm_dots(col = "weekday", size = 1.7)
+  tm_dots(col = "weekday", size = 0.6)
 
 ```
 
@@ -519,6 +518,7 @@ distinct(last4ccnum,loyaltynum, .keep_all = TRUE)
 ```
 
 We use the DT datatable to show the correspondence between the two types of cards.
+
 ```{r}
 DT::datatable(Combine) %>% 
   formatStyle(0, 
@@ -527,4 +527,20 @@ DT::datatable(Combine) %>%
 ```
 
 As we can see from the datatable, most of the two types of cards are in one-to-one correspondence, but there are still existing an inequality. The credit card with last four numbers of 8332, corresponding to two loyalty cards, L2070 and L8566. And also the loyalty card number L3288 corresponding to two credit cards, 1286 and 9241.So guess there may be a credit card and loyalty card borrowed or lost problem.
+
+And there are also exist many uncertainties, the first is that we can only manually filter the data in the data table, and there will be some errors to observe the match only with the naked eye. The second point is that we only visualized the location where each employee may shop, but there is still the possibility that he or she does not actually shop, which will lead to card matching errors.The third point is that it is impossible for an employee to have only one credit card, we only match according to the situation of possible shopping, there may be some omissions.
+
+
+# 4 Limitations and Conclusion
+According to the above analysis of some of the GASTech employees' credit cards and loyalty cards, we can find that there is not all one-to-one corresponding relationship, that is to say, there may be cases of credit card theft situation.
+
+At the same time, through the analysis of employees' daily travel routes, it is found that there are suspicious behaviors, hidden relationships, private use of trucks and other situations. In addition, there are still many limitations in this analysis.
+
+**For finding the most popular locations**, with loyalty card data, I did not correlate the number of appearances at each location with the amount spent, so the final visualizations show only a base case. As for the credit card data, it contains both time and date, so if the time and date can be combined for analysis when making heatmap, the results will be more valuable.
+
+**For Visualize the route for each ID**, similarly, due to the lack of time data, there may be some error between the visualization results and the actual situation, we can only guess whether the employee has any suspicious behavior according to his daily route. Similarly, in the previous analysis, we found that several employees visited the supermarket in the early morning, but we could not identify these employees just from the visualized path map, which is also a limitation in this analysis.
+
+**For match cards**, due to my own shortcomings, I could not find out the match between each card and employee by code at the end, so I could only come up with a manual filtering method to match one by one.
+
+Now each data set made is very scattered, and a common control panel is needed for overall analysis. If the information of each part can be linked together, the final result will be more perfect. And we will use Shiny to achieve this in the group project for better analysis.
 
