@@ -345,3 +345,22 @@ gps_path <- gps_sf %>%
   st_cast("LINESTRING")
 gps_path
 ```
+
+Visualize the paths by each id.
+
+```{r}
+gps_path_selected <- gps_path %>%
+arrange(desc(id))
+
+tmap_mode("view")
+tm_shape(bgmap) +
+  tm_rgb(bgmap, r = 1,g = 2,b = 3,
+       alpha = NA,
+       saturation = 1,
+       interpolate = TRUE,
+       max.value = 255) +
+  tm_shape(gps_path_selected) +
+  tm_facets(by = "id",ncol = 1) +
+  tm_layout(legend.show=FALSE) +
+  tm_lines(col = "weekday", lwd = 7)
+```
