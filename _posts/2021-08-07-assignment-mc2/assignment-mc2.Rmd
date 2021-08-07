@@ -298,4 +298,39 @@ GASTech employees present a tracked pattern throughout the day. At 7-8 am in the
 * Between 12pm and 2pm, a total of 55 credit card purchases were made at Ouzeri Elian, which is likely to be a pub, so there is speculation that some staff may have been involved in drinking on duty.
 * A total of five purchases were made in the Chotus Hotel between 12:00 and 1:00 p.m., and only one hour was spent in the Hotel before leaving, which is also a bit strange, but more specific research is needed.
 
-1
+## 3.2 Visualize the route for each ID
+
+First to import the map file and create the initial map.
+
+```{R}
+bgmap <- raster("D:/Study/Visual Analytics/Mavis-yuuu/Mavis_blog_ISSS608/_posts/2021-07-12-assignment/MC2-tourist.tif")
+bgmap
+tm_shape(bgmap) +
+tm_rgb(bgmap, r = 1,g = 2,b = 3,
+       alpha = NA,
+       saturation = 1,
+       interpolate = TRUE,
+       max.value = 255)
+```
+
+Then change the gps data format.
+
+```{r}
+Abila_st <- st_read(dsn = "./Geospatial",
+                    layer = "Abila")
+gps <- read_csv("D:/Study/Visual Analytics/Assignment/MC2/gps.csv")
+glimpse(gps)
+
+gps$Timestamp <- date_time_parse(gps$Timestamp,
+                zone = "",
+                format = "%m/%d/%Y %H:%M:%S")
+gps$weekday = wday(gps$Timestamp, 
+                  label = TRUE, 
+                  abbr = FALSE)
+gps$id <- as_factor(gps$id)
+
+gps_sf <- st_as_sf(gps, 
+                   coords = c("long", "lat"),
+                       crs= 4326)
+gps_sf
+```
