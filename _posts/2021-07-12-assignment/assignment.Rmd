@@ -201,6 +201,7 @@ LoyaltyCard_4 <- LoyaltyCard %>%
 glimpse(LoyaltyCard_4)
 ```
 
+
 Plotly is a very useful package to make interactive, publication-quality graphs with the reader. Will use plotly to make interactive bar chart, which can select different day in the control panel.
 
 ```{r}
@@ -543,4 +544,5 @@ At the same time, through the analysis of employees' daily travel routes, it is 
 **For match cards**, due to my own shortcomings, I could not find out the match between each card and employee by code at the end, so I could only come up with a manual filtering method to match one by one.
 
 Now each data set made is very scattered, and a common control panel is needed for overall analysis. If the information of each part can be linked together, the final result will be more perfect. And we will use Shiny to achieve this in the group project for better analysis.
+
 
