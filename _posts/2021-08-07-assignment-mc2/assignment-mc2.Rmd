@@ -364,3 +364,4 @@ tm_shape(bgmap) +
   tm_layout(legend.show=FALSE) +
   tm_lines(col = "weekday", lwd = 7)
 ```
+
