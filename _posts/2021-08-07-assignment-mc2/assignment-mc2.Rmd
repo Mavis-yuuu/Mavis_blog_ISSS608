@@ -335,3 +335,13 @@ gps_sf <- st_as_sf(gps,
 gps_sf
 ```
 
+Derive the path data.
+
+```{r}
+gps_path <- gps_sf %>%
+  group_by(id, weekday) %>%
+  summarize(m = mean(Timestamp), 
+            do_union=FALSE) %>%
+  st_cast("LINESTRING")
+gps_path
+```
