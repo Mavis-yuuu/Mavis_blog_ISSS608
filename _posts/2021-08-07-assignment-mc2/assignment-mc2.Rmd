@@ -334,3 +334,98 @@ gps_sf <- st_as_sf(gps,
                        crs= 4326)
 gps_sf
 ```
+
+Derive the path data.
+
+```{r}
+gps_path <- gps_sf %>%
+  group_by(id, weekday) %>%
+  summarize(m = mean(Timestamp), 
+            do_union=FALSE) %>%
+  st_cast("LINESTRING")
+gps_path
+```
+
+Visualize the paths by each id.
+
+```{r}
+gps_path_selected <- gps_path %>%
+arrange(desc(id))
+
+tmap_mode("view")
+tm_shape(bgmap) +
+  tm_rgb(bgmap, r = 1,g = 2,b = 3,
+       alpha = NA,
+       saturation = 1,
+       interpolate = TRUE,
+       max.value = 255) +
+  tm_shape(gps_path_selected) +
+  tm_facets(by = "id",ncol = 1) +
+  tm_layout(legend.show=FALSE) +
+  tm_lines(col = "weekday", lwd = 7)
+```
+
+And also we can use this code to show detailed tracks on weekday by one employee.
+
+```{r}
+gps_path_selected <- gps_path %>%
+filter(id == "28")
+
+tmap_mode("view")
+tm_shape(bgmap) +
+  tm_rgb(bgmap, r = 1,g = 2,b = 3,
+       alpha = NA,
+       saturation = 1,
+       interpolate = TRUE,
+       max.value = 255) +
+  tm_shape(gps_path_selected) +
+  tm_facets(by = "weekday",ncol = 1) +
+  tm_layout(legend.show=FALSE) +
+  tm_lines(col = "weekday", lwd = 7)
+```
+
+### 3.2.1 Identify unusual behaviors
+**1**. Some of employees may have the problem of drunk driving and drunk working, such as Nils Calixto for Car ID 1, Ingrid Barranco for Car ID 4 and so on.  
+For example, we can first analyze two employees, see from the path pictures. On Friday and Thursday for ID1 and Wednesday and Thursday for ID4, these two persons went to Ouzeri Elian many times, so we could assume he was driving under the influence. Due to time data limitations, we can only speculate that he may have been drinking on duty, since he needed to work on those two days.  
+
+![](Images/1.png)
+![](Images/2.png)
+
+**2**. Car ID 3 visits Alberts Fine Clothing almost every day
+If we carefully observe Felix Balas's road map, who is an engineer, we can find his paths almost meet at the clothing store every day. Therefore, we can conclude that he visits the clothing store very frequently. One possibility is that he has the need to buy clothes, and the other possibility is that he has other problems.
+
+![](Images/3.png)
+
+**3**. The employee with Car ID 9 drives the long distance from the company to shop at Bean There Done That almost every day.
+
+![](Images/4.png)
+
+Gustav Cazar, who is an drill technician, his paths during weekday are very similar. Almost every day, he chose to drive to the coffee shop far away from the GASTech company, but rarely choose the coffee shop close to the company and more employees choose, which is a bit strange.
+
+**4**. Car ID 21, 22 and 34 all went to the museum on Saturday.
+All three were from the security services, so it's not ruled out that they made an appointment to visit the museum together on Saturday.  
+
+![](Images/5.png)  
+![](Images/6.png)
+![](Images/7.png)
+
+**5**. Isia Vann with car ID 16 will go to Frydos Autosupply n More everyday.
+
+![](Images/8.png)
+
+Whether on weekends or during the week, this employee would choose to drive to the place.
+
+**6**. Car ID7 and ID33 went to CHOSTUS Hotel at the same weekday on Tuesday, and they came from the same department, engineering and the same current employment title.
+![](Images/9.png)
+![](Images/10.png)
+
+According to their first name, Elsa is a female name, and ID33 named Brand is a male name. and also according to the above information, we can suspect that they have an improper relationship.
+
+**7**. Car ID28 has a very strange path.
+![](Images/11.png)
+
+The path visualization of Kare Orilla is very shaky, so it is possible that she is driving under the influence of alcohol or is not skilled in driving without a driver's license.
+
+**8**. There may be instances where an employee drives a business truck for personal use.
+
+![](Images/12.png)
