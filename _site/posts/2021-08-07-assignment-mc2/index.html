@@ -117,7 +117,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"NULL"}
+  {"type":"character","attributes":{},"value":["assignment-mc2_files/anchor-4.2.2/anchor.min.js","assignment-mc2_files/bowser-1.9.3/bowser.min.js","assignment-mc2_files/distill-2.2.21/template.v2.js","assignment-mc2_files/jquery-1.11.3/jquery.min.js","assignment-mc2_files/popper-2.6.0/popper.min.js","assignment-mc2_files/tippy-6.2.7/tippy-bundle.umd.min.js","assignment-mc2_files/tippy-6.2.7/tippy-light-border.css","assignment-mc2_files/tippy-6.2.7/tippy.css","assignment-mc2_files/tippy-6.2.7/tippy.umd.min.js","assignment-mc2_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 <meta name="distill:offset" content="../.."/>
@@ -2112,6 +2112,10 @@ document.addEventListener('DOMContentLoaded', function() {
 <li><a href="#install-r-packages">2.1.1 Install R packages</a></li>
 <li><a href="#files-importing">2.1.2 Files importing</a></li>
 </ul></li>
+<li><a href="#clean-and-tidy-data">2.2 Clean and tidy data</a><ul>
+<li><a href="#missing-values-checking">2.2.1 Missing values checking</a></li>
+<li><a href="#adjust-data-type-and-format">2.2.2 Adjust data type and format</a></li>
+</ul></li>
 </ul></li>
 </ul>
 </nav>
@@ -2208,7 +2212,62 @@ $ CurrentEmploymentType  &lt;chr&gt; &quot;Information Technology&quot;, &quot;E
 $ CurrentEmploymentTitle &lt;chr&gt; &quot;IT Helpdesk&quot;, &quot;Engineer&quot;, &quot;Engineer&quot;~</code></pre>
 </div>
 <p>We can find some columns’ data types are incorrect, we will change it by following steps.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<h2 id="clean-and-tidy-data">2.2 Clean and tidy data</h2>
+<h3 id="missing-values-checking">2.2.1 Missing values checking</h3>
+<p>The first thing to do is to check whether there is missing value, and we find CarTrack dataset has missing value just on car ID, it is useful for us to see if there is private use of the bus problem, so do not delete.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>rowSums</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>LoyaltyCard</span><span class='op'>)</span><span class='op'>)</span><span class='op'>==</span><span class='cn'>TRUE</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>integer(0)</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>rowSums</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>CC</span><span class='op'>)</span><span class='op'>)</span><span class='op'>==</span><span class='cn'>TRUE</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>integer(0)</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>rowSums</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>GPS</span><span class='op'>)</span><span class='op'>)</span><span class='op'>==</span><span class='cn'>TRUE</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>integer(0)</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>rowSums</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>CarTrack</span><span class='op'>)</span><span class='op'>)</span><span class='op'>==</span><span class='cn'>TRUE</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] 36 37 38 39 40 41 42 43 44</code></pre>
+</div>
+<p>If the result gets 0, means the inexistence of missing. We can draw from the conclusion that three of the datasets do not have any missing except CarTrack. If we go back to check this dataset, we will find that the missing values are all the IDs of drivers whose in Gastech company, which are not very useful for our subsequent research, so we can choose to delete them by using na.omit function.</p>
+<h3 id="adjust-data-type-and-format">2.2.2 Adjust data type and format</h3>
+<p>From our previous brief glimpse of the data, the data type of “timestamp” column is incorrect. It should be in “date” format but is mistaken for “character” format, so here we use date_time_parse to modify it, and also extracts the hours and days as new columns in “CC” and “LoyaltyCard” respectively.</p>
+<p>For <strong>CC</strong> dataset:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>CC</span><span class='op'>$</span><span class='va'>timestamp</span> <span class='op'>&lt;-</span> <span class='fu'>date_time_parse</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='va'>CC</span><span class='op'>$</span><span class='va'>timestamp</span><span class='op'>)</span>,
+                zone <span class='op'>=</span> <span class='st'>""</span>,
+                format <span class='op'>=</span> <span class='st'>"%m/%d/%Y %H:%M"</span><span class='op'>)</span>
+<span class='va'>CC</span><span class='op'>$</span><span class='va'>weekday</span> <span class='op'>=</span> <span class='fu'>wday</span><span class='op'>(</span><span class='va'>CC</span><span class='op'>$</span><span class='va'>timestamp</span>, 
+                  label <span class='op'>=</span> <span class='cn'>TRUE</span>, 
+                  abbr <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='va'>CC</span><span class='op'>$</span><span class='va'>hour</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='fu'>get_hour</span><span class='op'>(</span><span class='va'>CC</span><span class='op'>$</span><span class='va'>timestamp</span><span class='op'>)</span><span class='op'>)</span> <span class='co'>#extract hour as new column</span>
+<span class='va'>a</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='va'>CC</span><span class='op'>$</span><span class='va'>timestamp</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>For <strong>LoyaltyCard</strong> dataset:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>LoyaltyCard</span><span class='op'>$</span><span class='va'>timestamp</span> <span class='op'>&lt;-</span> <span class='fu'>date_time_parse</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='va'>LoyaltyCard</span><span class='op'>$</span><span class='va'>timestamp</span><span class='op'>)</span>,
+                zone <span class='op'>=</span> <span class='st'>""</span>,
+                format <span class='op'>=</span> <span class='st'>"%m/%d/%Y"</span><span class='op'>)</span>
+<span class='va'>LoyaltyCard</span><span class='op'>$</span><span class='va'>Weekday</span> <span class='op'>=</span> <span class='fu'>wday</span><span class='op'>(</span><span class='va'>LoyaltyCard</span><span class='op'>$</span><span class='va'>timestamp</span>, 
+                             label <span class='op'>=</span> <span class='cn'>TRUE</span>, 
+                             abbr <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='va'>LoyaltyCard</span><span class='op'>$</span><span class='va'>day</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='fu'>get_day</span><span class='op'>(</span><span class='va'>LoyaltyCard</span><span class='op'>$</span><span class='va'>timestamp</span><span class='op'>)</span><span class='op'>)</span> <span class='co'>#extract day as new column</span>
+</code></pre>
+</div>
+</div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

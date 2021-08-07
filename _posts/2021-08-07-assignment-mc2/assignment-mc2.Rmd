@@ -91,3 +91,45 @@ glimpse(CarTrack)
 ```
 We can find some columns' data types are incorrect, we will change it by following steps.
 
+## 2.2 Clean and tidy data
+### 2.2.1 Missing values checking
+
+The first thing to do is to check whether there is missing value, and we find CarTrack dataset has missing value just on car ID, it is useful for us to see if there is private use of the bus problem, so do not delete.
+
+```{r}
+which(rowSums(is.na(LoyaltyCard))==TRUE)
+which(rowSums(is.na(CC))==TRUE)
+which(rowSums(is.na(GPS))==TRUE)
+which(rowSums(is.na(CarTrack))==TRUE)
+```
+
+If the result gets 0, means the inexistence of missing. We can draw from the conclusion that three of the datasets do not have any missing except CarTrack. If we go back to check this dataset, we will find that the missing values are all the IDs of drivers whose in Gastech company, which are not very useful for our subsequent research, so we can choose to delete them by using na.omit function.
+
+### 2.2.2 Adjust data type and format  
+
+From our previous brief glimpse of the data, the data type of "timestamp" column is incorrect. It should be in "date" format but is mistaken for "character" format, so here we use date_time_parse to modify it, and also extracts the hours and days as new columns in "CC" and "LoyaltyCard" respectively.
+
+For **CC** dataset:
+
+```{r}
+CC$timestamp <- date_time_parse(as.character(CC$timestamp),
+                zone = "",
+                format = "%m/%d/%Y %H:%M")
+CC$weekday = wday(CC$timestamp, 
+                  label = TRUE, 
+                  abbr = FALSE)
+CC$hour <- as.numeric(get_hour(CC$timestamp)) #extract hour as new column
+a <- as.character(CC$timestamp)
+```
+
+For **LoyaltyCard** dataset:
+
+```{r}
+LoyaltyCard$timestamp <- date_time_parse(as.character(LoyaltyCard$timestamp),
+                zone = "",
+                format = "%m/%d/%Y")
+LoyaltyCard$Weekday = wday(LoyaltyCard$timestamp, 
+                             label = TRUE, 
+                             abbr = FALSE)
+LoyaltyCard$day <- as.factor(get_day(LoyaltyCard$timestamp)) #extract day as new column
+```
