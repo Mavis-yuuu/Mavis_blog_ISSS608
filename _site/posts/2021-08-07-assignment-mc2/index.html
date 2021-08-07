@@ -2115,6 +2115,13 @@ document.addEventListener('DOMContentLoaded', function() {
 <li><a href="#clean-and-tidy-data">2.2 Clean and tidy data</a><ul>
 <li><a href="#missing-values-checking">2.2.1 Missing values checking</a></li>
 <li><a href="#adjust-data-type-and-format">2.2.2 Adjust data type and format</a></li>
+<li><a href="#derive-new-column">2.2.3 Derive new column</a></li>
+<li><a href="#rename-some-text-data">2.2.4 Rename some text data</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#find-anomalies">3 Find anomalies</a><ul>
+<li><a href="#identify-the-most-popular-locations">3.1 Identify the most popular locations</a><ul>
+<li><a href="#for-loyalty-card-transactions">3.1.1 For loyalty card transactions</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -2267,7 +2274,46 @@ $ CurrentEmploymentTitle &lt;chr&gt; &quot;IT Helpdesk&quot;, &quot;Engineer&quo
 </code></pre>
 </div>
 </div>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<h3 id="derive-new-column">2.2.3 Derive new column</h3>
+<p>In the CarTrack dataset, we found the first name and last name were mistakenly divided into two columns, due to this, we combined them into one column with paste function.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>CarTrack</span><span class='op'>$</span><span class='va'>Name</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='va'>CarTrack</span><span class='op'>$</span><span class='va'>FirstName</span>, <span class='va'>CarTrack</span><span class='op'>$</span><span class='va'>LastName</span><span class='op'>)</span>
+<span class='va'>CarTrack</span> <span class='op'>&lt;-</span> <span class='va'>CarTrack</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>select</span><span class='op'>(</span><span class='va'>CarID</span>,<span class='va'>CurrentEmploymentTitle</span>,<span class='va'>CurrentEmploymentType</span>,<span class='va'>Name</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<h3 id="rename-some-text-data">2.2.4 Rename some text data</h3>
+<p>Because one of the location name is in Greek format, we need to change it into English, and also delete all the single quotes, it may cause misleading for following code.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>LoyaltyCard</span><span class='op'>$</span><span class='va'>location</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>gsub</a></span><span class='op'>(</span><span class='st'>"'"</span>, <span class='st'>''</span>, <span class='va'>LoyaltyCard</span><span class='op'>$</span><span class='va'>location</span><span class='op'>)</span>
+<span class='va'>LoyaltyCard</span><span class='op'>$</span><span class='va'>location</span><span class='op'>[</span><span class='va'>LoyaltyCard</span><span class='op'>$</span><span class='va'>location</span><span class='op'>==</span><span class='st'>"Katerina’s Café"</span><span class='op'>]</span><span class='op'>&lt;-</span><span class='st'>"Katerina Cafe"</span>
+</code></pre>
+</div>
+</div>
+<h1 id="find-anomalies">3 Find anomalies</h1>
+<h2 id="identify-the-most-popular-locations">3.1 Identify the most popular locations</h2>
+<h3 id="for-loyalty-card-transactions">3.1.1 For loyalty card transactions</h3>
+<p>Create new dataset named “LoyaltyCard_3”, use group_by function to count the number of occurrences at each location during this period. We will use this dataset for further visualization.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>LoyaltyCard_3</span> <span class='op'>&lt;-</span> <span class='va'>LoyaltyCard</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>select</span><span class='op'>(</span><span class='va'>location</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>group_by</span><span class='op'>(</span><span class='va'>location</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>summarize</span><span class='op'>(</span>weight <span class='op'>=</span><span class='fu'>n</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>arrange</span><span class='op'>(</span><span class='fu'>desc</span><span class='op'>(</span><span class='va'>weight</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='fu'>glimpse</span><span class='op'>(</span><span class='va'>LoyaltyCard_3</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>Rows: 33
+Columns: 2
+$ location &lt;chr&gt; &quot;Katerina Cafe&quot;, &quot;Hippokampos&quot;, &quot;Guys Gyros&quot;, &quot;Brew~
+$ weight   &lt;int&gt; 195, 155, 146, 140, 84, 80, 71, 66, 60, 45, 42, 37,~</code></pre>
+</div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

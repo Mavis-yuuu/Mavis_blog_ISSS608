@@ -133,3 +133,38 @@ LoyaltyCard$Weekday = wday(LoyaltyCard$timestamp,
                              abbr = FALSE)
 LoyaltyCard$day <- as.factor(get_day(LoyaltyCard$timestamp)) #extract day as new column
 ```
+
+### 2.2.3 Derive new column
+
+In the CarTrack dataset, we found the first name and last name were mistakenly divided into two columns, due to this, we combined them into one column with paste function.
+
+```{r}
+CarTrack$Name <- paste(CarTrack$FirstName, CarTrack$LastName)
+CarTrack <- CarTrack %>% 
+  select(CarID,CurrentEmploymentTitle,CurrentEmploymentType,Name)
+```
+
+### 2.2.4 Rename some text data
+
+Because one of the location name is in Greek format, we need to change it into English, and also delete all the single quotes, it may cause misleading for following code.
+
+```{r}
+LoyaltyCard$location <- gsub("'", '', LoyaltyCard$location)
+LoyaltyCard$location[LoyaltyCard$location=="Katerina’s Café"]<-"Katerina Cafe"
+```
+
+# 3 Find anomalies 
+## 3.1 Identify the most popular locations
+### 3.1.1 For loyalty card transactions
+
+Create new dataset named "LoyaltyCard_3", use group_by function to count the number of occurrences at each location during this period. We will use this dataset for further visualization.
+
+```{r}
+LoyaltyCard_3 <- LoyaltyCard %>% 
+  select(location) %>%
+  group_by(location) %>% 
+  summarize(weight =n()) %>%
+  arrange(desc(weight))
+
+glimpse(LoyaltyCard_3)
+```
