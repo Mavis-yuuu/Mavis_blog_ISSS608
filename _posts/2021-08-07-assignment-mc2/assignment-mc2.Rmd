@@ -168,3 +168,64 @@ LoyaltyCard_3 <- LoyaltyCard %>%
 
 glimpse(LoyaltyCard_3)
 ```
+
+First to visualize the total loyalty card transaction number within 14 days in each locations of Kronos.
+
+```{r}
+Bar <- plot_ly(data=LoyaltyCard_3,
+  x = ~weight,
+  y = ~location,
+  type = "bar",
+  text = ~paste("location:", location,
+                "<br>Number of times:", weight),
+  marker = list(color = 'rgb(158,202,225)',
+           line = list(color = 'rgb(8,48,107)', width = 1.5))) %>%
+  layout(xaxis = list(title = 'Number of times'),
+         yaxis = list(title = "",
+                      categoryorder = "array",
+                      categoryarray = ~weight),
+    title ='Total number of loyalty card transactions')
+
+Bar
+ 
+```
+
+We can find the most three popular places among employees who are using loyalty card to buy from GASTech company are cafe shop and restaurant, Katerina's Cafe, Guy's Gyros and hippokampos, it seems that they are in the habit of drinking coffee on a regular basis, and it may be speculated that they are in the habit of meeting customers in a cafe or having a conversation to relax.
+
+Then we group the data by day in order to showing the changes in each day and name it as LoyaltyCard4.
+
+```{r}
+LoyaltyCard_4 <- LoyaltyCard %>% 
+  select(location,Weekday) %>%  
+  group_by(Weekday,location) %>%  
+  summarize(Count=n())
+
+glimpse(LoyaltyCard_4)
+```
+
+Plotly is a very useful package to make interactive, publication-quality graphs with the reader. Will use plotly to make interactive bar chart, which can select different day in the control panel.
+
+```{r}
+
+BAR3 <-  plot_ly(data=LoyaltyCard_4,
+    x = ~Count, 
+    y = ~location, 
+    color = ~location, 
+    frame = ~Weekday, 
+    text = ~paste("Day:", Weekday,     
+                  "<br>Count:", Count,
+                  "<br>location:",location),
+    hoverinfo = "text",
+    type = 'bar',
+    mode = 'markers'
+  ) %>%
+layout(title ='Most popular location of loyalty card transaction by weekday')
+
+
+BAR3
+```
+
+From the graph we can use the control panel to see the most popular place on Sunday is Hippokampos, then is Katerina's Cafe. On Monday is Brewve Been Served, following by 	
+Katerina Cafe, which is the most popular place on Tuesday and Thursday too. The most popular location on Wednesday and Friday is a combination of Monday and Tuesday, Brewve Been Served and Katerina Cafe.
+
+So we can conclude that the most popular location for GASTech employees are Brewve Been Served and Katerina Cafe, thsy will always choose these two place to have a rest and eating.
