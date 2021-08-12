@@ -352,7 +352,7 @@ Visualize the paths by each id.
 gps_path_selected <- gps_path %>%
 arrange(desc(id))
 
-tmap_mode("view")
+tmap_mode("plot")
 tm_shape(bgmap) +
   tm_rgb(bgmap, r = 1,g = 2,b = 3,
        alpha = NA,
@@ -360,7 +360,7 @@ tm_shape(bgmap) +
        interpolate = TRUE,
        max.value = 255) +
   tm_shape(gps_path_selected) +
-  tm_facets(by = "id",ncol = 1) +
+  tm_facets(by = "id",ncol = 3) +
   tm_layout(legend.show=FALSE) +
   tm_lines(col = "weekday", lwd = 7)
 ```
@@ -371,7 +371,7 @@ And also we can use this code to show detailed tracks on weekday by one employee
 gps_path_selected <- gps_path %>%
 filter(id == "28")
 
-tmap_mode("view")
+tmap_mode("plot")
 tm_shape(bgmap) +
   tm_rgb(bgmap, r = 1,g = 2,b = 3,
        alpha = NA,
@@ -379,7 +379,7 @@ tm_shape(bgmap) +
        interpolate = TRUE,
        max.value = 255) +
   tm_shape(gps_path_selected) +
-  tm_facets(by = "weekday",ncol = 1) +
+  tm_facets(by = "weekday",ncol = 3) +
   tm_layout(legend.show=FALSE) +
   tm_lines(col = "weekday", lwd = 7)
 ```
@@ -474,7 +474,7 @@ gps_time_path <- gps_time_sf %>%
 Each point means that the Employee chooses to consume at that place.
 
 ```{r}
-tmap_mode("view")
+tmap_mode("plot")
 tm_shape(bgmap) +
   tm_rgb(bgmap, r = 1,g = 2,b = 3,
        alpha = NA,
@@ -482,7 +482,7 @@ tm_shape(bgmap) +
        interpolate = TRUE,
        max.value = 255) +
   tm_shape(gps_time_path) +
-  tm_facets(by = "id",ncol = 2) +
+  tm_facets(by = "id",ncol = 3) +
   tm_layout(legend.show=FALSE) +
   tm_dots(col = "weekday", size = 0.6)
 
