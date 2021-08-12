@@ -360,7 +360,7 @@ tm_shape(bgmap) +
        interpolate = TRUE,
        max.value = 255) +
   tm_shape(gps_path_selected) +
-  tm_facets(by = "id",ncol = 3) +
+  tm_facets(by = "id",ncol = 1) +
   tm_layout(legend.show=FALSE) +
   tm_lines(col = "weekday", lwd = 7)
 ```
@@ -379,7 +379,7 @@ tm_shape(bgmap) +
        interpolate = TRUE,
        max.value = 255) +
   tm_shape(gps_path_selected) +
-  tm_facets(by = "weekday",ncol = 3) +
+  tm_facets(by = "weekday",ncol = 1) +
   tm_layout(legend.show=FALSE) +
   tm_lines(col = "weekday", lwd = 7)
 ```
@@ -482,7 +482,7 @@ tm_shape(bgmap) +
        interpolate = TRUE,
        max.value = 255) +
   tm_shape(gps_time_path) +
-  tm_facets(by = "id",ncol = 3) +
+  tm_facets(by = "id",ncol = 1) +
   tm_layout(legend.show=FALSE) +
   tm_dots(col = "weekday", size = 0.6)
 
